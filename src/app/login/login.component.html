@@ -1,0 +1,18 @@
+<div class="login-container">
+  <div class="login-box">
+    <h2>Cấu hình</h2>
+    <form (ngSubmit)="onSubmit()">
+      <div class="input-group">
+        <label for="username">Tên đăng nhập</label>
+        <input name="username" id="username" placeholder="Nhập..." [(ngModel)]="username" />
+      </div>
+
+      <div class="input-group">
+        <label for="password">Mật khẩu</label>
+        <input name="password" type="password" id="password" placeholder="Nhập..." [(ngModel)]="password" />
+      </div>
+
+      <button type="submit" class="login-btn">Đăng nhập</button>
+    </form>
+  </div>
+</div>
