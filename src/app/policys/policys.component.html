@@ -1,0 +1,27 @@
+<div class="container">
+
+
+  <!-- Title Section -->
+  <div class="title-section">
+    <h3>CHÍNH SÁCH GIÁ THỰC ĐƠN</h3>
+  </div>
+
+  <!-- Search Bar -->
+  <div class="search-bar">
+    <input type="text" placeholder="Tìm chính sách">
+    <button class="add-policy-btn" (click)="addPolicy()">+</button>
+  </div>
+
+  <!-- Policies List -->
+  <div class="policies-list">
+
+    <div class="policy-item" *ngFor="let p of policies">
+      <div class="policy-name">{{ p.name }}</div>
+      <p>{{ p.des }}</p>
+      <div class="policy-info">
+        <button>Thông tin</button>
+      </div>
+    </div>
+
+  </div>
+</div>

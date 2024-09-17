@@ -1,2 +1,15 @@
-<p>home works!</p>
-<button (click)="logout()">logout</button>
+<div class="admin-container">
+  <nav class="sidebar">
+    <h2>Cấu hình</h2>
+    <ul>
+      <li><a routerLink="shops">Cửa hàng</a></li>
+      <li><a routerLink="items">Hàng hoá</a></li>
+      <li><a routerLink="groups">Nhóm hàng hoá</a></li>
+      <li><a routerLink="policys">Chính sách</a></li>
+      <li (click)="logout()"><div class="logout" >Đăng xuất</div></li>
+    </ul>
+  </nav>
+  <div class="main-content">
+    <router-outlet></router-outlet>
+  </div>
+</div>
