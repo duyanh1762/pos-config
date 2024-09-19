@@ -69,8 +69,26 @@
 /* Policies List */
 .policies-list {
   margin-top: 20px;
+  max-height: 74vh;
+  overflow-y: auto;
+}
+.policies-list::-webkit-scrollbar {
+  width: 2px; /* Change this value to adjust scrollbar width */
 }
 
+.policies-list::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 4px; /* Rounded corners */
+}
+
+.policies-list::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}
+
+.policies-list::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+  border-radius: 4px;
+}
 .policy-item {
   display: flex;
   justify-content: space-between;

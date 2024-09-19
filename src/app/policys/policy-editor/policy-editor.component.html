@@ -1,1 +1,49 @@
-<p>policy-editor works!</p>
+<div class="container">
+  <div class="header-container" *ngIf="data.type === 'create'">
+    Tạo mới
+  </div>
+  <div class="header-container" *ngIf="data.type === 'edit'">
+    Thông tin
+  </div>
+  <div class="form-container">
+    <form (ngSubmit)="onSubmit()">
+      <div class="form-input">
+        <label for="name">Tên chính sách</label>
+        <input
+          name="name"
+          id="name"
+          placeholder="Nhập..."
+          [(ngModel)]="name"
+        />
+      </div>
+      <div class="form-input">
+        <label for="descreption">Mô tả</label>
+        <input
+          name="descreption"
+          id="descreption"
+          placeholder="Nhập..."
+          [(ngModel)]="descreption"
+        />
+      </div>
+      <div class="form-input" *ngIf="data.type === 'edit'">
+        <label for="name">Ngày tạo</label>
+        <input
+          name="date"
+          id="date"
+          [(ngModel)]="date"
+          readonly
+        />
+      </div>
+      <button type="submit" >Xác nhận</button>
+    </form>
+  </div>
+  <div class="item-container" *ngIf="data.type === 'edit'">
+    <div class="title">
+      Danh sách món
+    </div>
+    <div class="item" *ngFor="let i of items">
+      <div class="name">{{ i.name }}</div>
+      <div class="price">{{ i.price }} vnđ</div>
+    </div>
+  </div>
+</div>

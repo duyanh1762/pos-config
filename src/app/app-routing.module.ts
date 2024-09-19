@@ -17,6 +17,7 @@ const routes: Routes = [
     {path:"groups",component:GroupsComponent,canActivate:[LoginGuard]},
     {path:"policys",component:PolicysComponent,canActivate:[LoginGuard]},
   ]},
+  {path:"**",redirectTo:"home",pathMatch:"full"},
 ];
 
 @NgModule({

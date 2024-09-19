@@ -26,6 +26,36 @@ export class PolicysComponent implements OnInit {
     });
   }
   addPolicy(){
-    this.bsModal.show(PolicyEditorComponent);
+    this.bsModal.show(PolicyEditorComponent,{
+      initialState:{
+        data:{
+          type:"create",
+          data:0,
+        }
+      }
+    }).content?.response.subscribe((res:any)=>{
+      if(res.status === "success"){
+        this.policies.push(res.data);
+      }
+    });
+  }
+  showPolicy(p:Policy){
+    this.bsModal.show(PolicyEditorComponent,{
+      initialState:{
+        data:{
+          type:"edit",
+          data:p
+        }
+      }
+    }).content?.response.subscribe((res:any)=>{
+      if(res.status === "success"){
+        this.policies.forEach((p:Policy)=>{
+          if(res.data.id === p.id){
+            p.name = res.data.name;
+            p.des = res.data.des;
+          }
+        });
+      }
+    });
   }
 }
