@@ -1,1 +1,17 @@
-<p>groups works!</p>
+<div class="container">
+  <div class="title-section">
+    <h3>NHÓM HÀNG HOÁ CHÍNH</h3>
+  </div>
+  <div class="search-bar">
+    <input #searchInput type="text" placeholder="Tìm nhóm" (keyup)="search()">
+    <button class="add-group-btn" (click)="addGroup()">+</button>
+  </div>
+  <div class="group-list">
+    <div class="group-item" *ngFor="let g of groups" >
+      <div class="group-name">{{ g.name }}</div>
+      <div class="group-info">
+        <button (click)="showGroup(g)">Thông tin</button>
+      </div>
+    </div>
+  </div>
+</div>

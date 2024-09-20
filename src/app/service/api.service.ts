@@ -55,4 +55,7 @@ export class ApiService {
 
     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
   }
+  removeAccents(str: string):string {
+    return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ApiService } from '../service/api.service';
 import { Policy } from '../Models/policy';
 import { BsModalService } from 'ngx-bootstrap/modal';
@@ -10,7 +10,10 @@ import { PolicyEditorComponent } from './policy-editor/policy-editor.component';
   styleUrls: ['./policys.component.css']
 })
 export class PolicysComponent implements OnInit {
+  @ViewChild("searchInput",{read:ElementRef,static:true}) searchInput:ElementRef;
+
   policies:Array<Policy> = [];
+  policiesLU:Array<Policy> = [];
   constructor(private api:ApiService,private bsModal:BsModalService) { }
 
   ngOnInit(): void {
@@ -23,6 +26,7 @@ export class PolicysComponent implements OnInit {
     };
     this.api.policy(request).subscribe((res:any)=>{
       this.policies = res;
+      this.policiesLU = res;
     });
   }
   addPolicy(){
@@ -36,6 +40,7 @@ export class PolicysComponent implements OnInit {
     }).content?.response.subscribe((res:any)=>{
       if(res.status === "success"){
         this.policies.push(res.data);
+        this.policiesLU.push(res.data);
       }
     });
   }
@@ -55,7 +60,26 @@ export class PolicysComponent implements OnInit {
             p.des = res.data.des;
           }
         });
+        this.policiesLU.forEach((p:Policy)=>{
+          if(res.data.id === p.id){
+            p.name = res.data.name;
+            p.des = res.data.des;
+          }
+        });
       }
     });
+  }
+  search(){
+    let value:string = this.searchInput.nativeElement.value;
+    this.policies = [];
+    if(value.length <= 0){
+      this.policies = this.policiesLU;
+    }else{
+      this.policiesLU.forEach((p:Policy)=>{
+        if(this.api.removeAccents(p.name.toLowerCase()).indexOf(this.api.removeAccents(value.toLowerCase())) != -1){
+          this.policies.push(p);
+        }
+      });
+    }
   }
 }

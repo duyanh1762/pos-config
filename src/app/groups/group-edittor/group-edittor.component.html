@@ -1,0 +1,31 @@
+<div class="container">
+  <div class="header-container" *ngIf="data.type === 'create'">
+    Tạo mới
+  </div>
+  <div class="header-container" *ngIf="data.type === 'edit'">
+    Thông tin
+  </div>
+  <div class="form-container">
+    <form (ngSubmit)="onSubmit()">
+      <div class="form-input">
+        <label for="name">Tên nhóm</label>
+        <input
+          name="name"
+          id="name"
+          placeholder="Nhập..."
+          [(ngModel)]="name"
+        />
+      </div>
+      <button type="submit" >Xác nhận</button>
+    </form>
+  </div>
+  <div class="item-container" *ngIf="data.type === 'edit'">
+    <div class="title">
+      Danh sách món
+    </div>
+    <div class="item" *ngFor="let i of items">
+      <div class="name">{{ i.name }}</div>
+      <div class="price">{{ i.price }} vnđ</div>
+    </div>
+  </div>
+</div>

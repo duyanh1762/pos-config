@@ -14,6 +14,7 @@ import { GroupsComponent } from './groups/groups.component';
 import { PolicysComponent } from './policys/policys.component';
 import { ApiService } from './service/api.service';
 import { PolicyEditorComponent } from './policys/policy-editor/policy-editor.component';
+import { GroupEdittorComponent } from './groups/group-edittor/group-edittor.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { PolicyEditorComponent } from './policys/policy-editor/policy-editor.com
     GroupsComponent,
     PolicysComponent,
     PolicyEditorComponent,
+    GroupEdittorComponent,
   ],
   imports: [
     BrowserModule,
