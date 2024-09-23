@@ -15,6 +15,9 @@ import { PolicysComponent } from './policys/policys.component';
 import { ApiService } from './service/api.service';
 import { PolicyEditorComponent } from './policys/policy-editor/policy-editor.component';
 import { GroupEdittorComponent } from './groups/group-edittor/group-edittor.component';
+import { ShopDetailsComponent } from './shops/shop-details/shop-details.component';
+import { ShopListComponent } from './shops/shop-list/shop-list.component';
+import { StaffEditorComponent } from './shops/shop-details/staff-editor/staff-editor.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +30,9 @@ import { GroupEdittorComponent } from './groups/group-edittor/group-edittor.comp
     PolicysComponent,
     PolicyEditorComponent,
     GroupEdittorComponent,
+    ShopDetailsComponent,
+    ShopListComponent,
+    StaffEditorComponent,
   ],
   imports: [
     BrowserModule,

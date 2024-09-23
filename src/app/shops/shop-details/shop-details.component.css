@@ -6,15 +6,33 @@
 }
 
 .container {
-  max-width: 95%;
+  max-width: 1250px;
+  max-height: 94vh;
   margin: 0 auto;
   padding: 20px;
   background-color: white;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  overflow-y: auto;
+}
+.container::-webkit-scrollbar {
+  width: 2px; /* Change this value to adjust scrollbar width */
 }
 
+.container::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 4px; /* Rounded corners */
+}
+
+.container::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}
+
+.container::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+  border-radius: 4px;
+}
 /* Header */
 .header-container {
   text-align: center;
@@ -38,7 +56,7 @@
   font-weight: bold;
 }
 
-.form-input input {
+.form-input input, .form-input select {
   width: 100%;
   padding: 10px;
   border-radius: 5px;
@@ -46,8 +64,9 @@
   outline: none;
 }
 
-button[type="submit"] {
+button[type="submit"] ,.add-btn{
   background-color:#f39c12;
+  width: 120px;
   color: white;
   padding: 10px 20px;
   border: none;
@@ -56,10 +75,23 @@ button[type="submit"] {
   outline: none;
 }
 
-button[type="submit"]:hover {
+button[type="submit"]:hover,.add-btn:hover {
   background-color: #e67e22;
 }
-
+.back-btn{
+  background-color: #dd1314;
+  width: 120px;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  outline: none;
+  margin-left: 10px;
+}
+.back-btn:hover{
+  background-color: #842029;
+}
 /* Item List */
 .item-container {
   margin-top: 20px;
@@ -69,6 +101,7 @@ button[type="submit"]:hover {
   font-size: 20px;
   font-weight: bold;
   margin-bottom: 10px;
+  text-align: center;
 }
 
 .item {

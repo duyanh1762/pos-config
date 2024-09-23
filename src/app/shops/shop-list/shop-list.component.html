@@ -1,0 +1,23 @@
+<div class="container">
+
+
+  <div class="title-section">
+    <h3>DANH SÁCH CỬA HÀNG</h3>
+  </div>
+
+  <div class="search-bar">
+    <input #searchInput type="text" placeholder="Tìm cửa hàng" (keyup)="search()">
+    <button class="add-shop-btn" (click)="addShop()">+</button>
+  </div>
+
+  <div class="shop-list">
+
+    <div class="shop-item" *ngFor="let s of shops">
+      <div class="shop-name">{{ s.address }}</div>
+      <div class="shop-info">
+        <button (click)="showShop(s)">Thông tin</button>
+      </div>
+    </div>
+
+  </div>
+</div>
