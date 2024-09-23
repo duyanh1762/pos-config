@@ -107,6 +107,50 @@ export class ShopDetailsComponent implements OnInit {
     });
   }
   onSubmit(){
-    // To do here..... create xong thi set lai gia tri cho localStorage
+    if(this.data.type === "create"){
+      let newShop:Shop = {
+        id:0,
+        name:this.name,
+        password:this.password,
+        address:this.address,
+        policyID:Number(this.policyID),
+        number_table:this.table
+      };
+      let request:DataRequest = {
+        mode:"create",
+        data:newShop
+      };
+      this.api.shop(request).subscribe((res:any)=>{
+        if(res.id){
+          alert("Thêm thành công !");
+          localStorage.setItem("shop-type","edit");
+          localStorage.setItem("shop-infor",JSON.stringify(res));
+          this.data.type = "edit";
+          this.data.data = res;
+        }else{
+          alert("Thêm thất bại , có lỗi xảy ra !");
+        }
+      });
+    }else{
+      let updateShop:Shop = {
+        id:this.data.data.id,
+        name:this.name,
+        password:this.password,
+        address:this.address,
+        policyID:Number(this.policyID),
+        number_table:this.table
+      };
+      let request:DataRequest = {
+        mode:"update",
+        data:updateShop
+      };
+      this.api.shop(request).subscribe((res:any)=>{
+        if(res.affected === 1){
+          alert("Cập nhật thành công !");
+        }else{
+          alert("Cập nhật thất bại , có lỗi xảy ra !");
+        }
+      });
+    }
   }
 }
