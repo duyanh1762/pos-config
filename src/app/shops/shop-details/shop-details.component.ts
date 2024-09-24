@@ -22,8 +22,8 @@ export class ShopDetailsComponent implements OnInit {
   address: string = '';
   name: string = '';
   password: string = '';
-  table: number = 0;
-  policyID: number = 0;
+  table: number | null = null;
+  policyID: number | null = null;
   policies: Array<Policy> = [];
   staffs:Array<Staff> = [];
 
@@ -114,7 +114,7 @@ export class ShopDetailsComponent implements OnInit {
         password:this.password,
         address:this.address,
         policyID:Number(this.policyID),
-        number_table:this.table
+        number_table:Number(this.table)
       };
       let request:DataRequest = {
         mode:"create",
@@ -138,7 +138,7 @@ export class ShopDetailsComponent implements OnInit {
         password:this.password,
         address:this.address,
         policyID:Number(this.policyID),
-        number_table:this.table
+        number_table:Number(this.table)
       };
       let request:DataRequest = {
         mode:"update",

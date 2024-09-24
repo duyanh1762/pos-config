@@ -6,7 +6,7 @@
     Thông tin
   </div>
   <div class="form-container">
-    <form (ngSubmit)="onSubmit()">
+    <form #form="ngForm" (ngSubmit)="onSubmit()" novalidate>
       <div class="form-input">
         <label for="name">Tên nhóm</label>
         <input
@@ -14,9 +14,10 @@
           id="name"
           placeholder="Nhập..."
           [(ngModel)]="name"
+          required
         />
       </div>
-      <button type="submit" >Xác nhận</button>
+      <button type="submit" [disabled]="form.invalid">Xác nhận</button>
     </form>
   </div>
   <div class="item-container" *ngIf="data.type === 'edit'">

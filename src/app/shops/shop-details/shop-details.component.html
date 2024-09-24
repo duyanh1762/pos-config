@@ -6,7 +6,7 @@
     Thông tin
   </div>
   <div class="form-container">
-    <form (ngSubmit)="onSubmit()">
+    <form #form="ngForm" (ngSubmit)="onSubmit()" novalidate>
       <div class="form-input">
         <label for="name">Địa chỉ cửa hàng</label>
         <input
@@ -14,6 +14,7 @@
           id="address"
           placeholder="Nhập..."
           [(ngModel)]="address"
+          required
         />
       </div>
       <div class="form-input">
@@ -23,6 +24,7 @@
           id="name"
           placeholder="Nhập..."
           [(ngModel)]="name"
+          required
         />
       </div>
       <div class="form-input">
@@ -32,11 +34,12 @@
           id="password"
           placeholder="Nhập..."
           [(ngModel)]="password"
+          required
         />
       </div>
       <div class="form-input">
         <label for="descreption">Chính sách</label>
-        <select name="policy" id="policy" [(ngModel)]="policyID">
+        <select name="policy" id="policy" [(ngModel)]="policyID" required >
           <option *ngFor="let p of policies" [value]="p.id">{{ p.name }}</option>
         </select>
       </div>
@@ -48,9 +51,10 @@
           type="number"
           placeholder="Nhập..."
           [(ngModel)]="table"
+          required
         />
       </div>
-      <button type="submit" >Xác nhận</button>
+      <button type="submit" [disabled]="form.invalid">Xác nhận</button>
       <button class="back-btn" (click)="back()" >Trở về</button>
     </form>
   </div>

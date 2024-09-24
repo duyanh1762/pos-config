@@ -39,50 +39,54 @@ export class StaffEditorComponent implements OnInit {
     console.log(this.data.shopData);
   }
   onSubmit(){
-    if(this.data.type === "create"){
-      let newStaff:Staff = {
-        id:0,
-        name:this.name,
-        password:this.password,
-        role:this.role,
-        status:this.status,
-        shopID:this.data.shopData.id
-      };
-      let request:DataRequest = {
-        mode:"create",
-        data:newStaff
-      };
-      this.api.staff(request).subscribe((res:any)=>{
-        if(res.id){
-          alert("Thêm thành công !");
-          this.responsive.emit({status:"success",data:res});
-          this.bsRef.hide();
-        }else{
-          alert("Thêm thất bại , đã có lỗi xảy ra !");
-        }
-      });
+    if(this.name.length <=0 || this.password.length <=0 || this.role.length <= 0 || this.status.length <= 0){
+      alert("Hãy nhập đầy đủ thông tin !");
     }else{
-      let updateStaff:Staff = {
-        id:this.data.data.id,
-        name:this.name,
-        password:this.password,
-        role:this.role,
-        status:this.status,
-        shopID:this.data.shopData.id
-      };
-      let request:DataRequest = {
-        mode:"update",
-        data:updateStaff
-      };
-      this.api.staff(request).subscribe((res:any)=>{
-        if(res.affected === 1){
-          alert("Cập nhật thành công !");
-          this.responsive.emit({status:"success",data:updateStaff});
-          this.bsRef.hide();
-        }else{
-          alert("Cập nhật thất bại , đã có lỗi xảy ra !");
-        }
-      });
+      if(this.data.type === "create"){
+        let newStaff:Staff = {
+          id:0,
+          name:this.name,
+          password:this.password,
+          role:this.role,
+          status:this.status,
+          shopID:this.data.shopData.id
+        };
+        let request:DataRequest = {
+          mode:"create",
+          data:newStaff
+        };
+        this.api.staff(request).subscribe((res:any)=>{
+          if(res.id){
+            alert("Thêm thành công !");
+            this.responsive.emit({status:"success",data:res});
+            this.bsRef.hide();
+          }else{
+            alert("Thêm thất bại , đã có lỗi xảy ra !");
+          }
+        });
+      }else{
+        let updateStaff:Staff = {
+          id:this.data.data.id,
+          name:this.name,
+          password:this.password,
+          role:this.role,
+          status:this.status,
+          shopID:this.data.shopData.id
+        };
+        let request:DataRequest = {
+          mode:"update",
+          data:updateStaff
+        };
+        this.api.staff(request).subscribe((res:any)=>{
+          if(res.affected === 1){
+            alert("Cập nhật thành công !");
+            this.responsive.emit({status:"success",data:updateStaff});
+            this.bsRef.hide();
+          }else{
+            alert("Cập nhật thất bại , đã có lỗi xảy ra !");
+          }
+        });
+      }
     }
   }
 }
