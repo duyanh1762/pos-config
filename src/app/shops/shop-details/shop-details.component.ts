@@ -93,7 +93,6 @@ export class ShopDetailsComponent implements OnInit {
       }
     }).content?.responsive.subscribe((res:any)=>{
       if(res.status === "success"){
-        console.log(res.data);
         this.staffs.forEach((s:Staff)=>{
           if(s.id === res.data.id){
             console.log("1")

@@ -39,7 +39,6 @@ export class PolicysComponent implements OnInit {
       }
     }).content?.response.subscribe((res:any)=>{
       if(res.status === "success"){
-        this.policies.push(res.data);
         this.policiesLU.push(res.data);
       }
     });
@@ -54,12 +53,6 @@ export class PolicysComponent implements OnInit {
       }
     }).content?.response.subscribe((res:any)=>{
       if(res.status === "success"){
-        this.policies.forEach((p:Policy)=>{
-          if(res.data.id === p.id){
-            p.name = res.data.name;
-            p.des = res.data.des;
-          }
-        });
         this.policiesLU.forEach((p:Policy)=>{
           if(res.data.id === p.id){
             p.name = res.data.name;

@@ -40,7 +40,6 @@ export class GroupsComponent implements OnInit {
       }
     }).content?.respnose.subscribe((res:any)=>{
       if(res.status === "success"){
-        this.groups.push(res.data);
         this.groupsLU.push(res.data);
       }
     });
@@ -55,11 +54,6 @@ export class GroupsComponent implements OnInit {
       }
     }).content?.respnose.subscribe((res:any)=>{
       if(res.status === "success"){
-        this.groups.forEach((g:Group)=>{
-          if(g.id === res.data.id){
-            g.name = res.data.name;
-          }
-        });
         this.groupsLU.forEach((g:Group)=>{
           if(g.id === res.data.id){
             g.name = res.data.name;

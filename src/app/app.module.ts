@@ -18,6 +18,7 @@ import { GroupEdittorComponent } from './groups/group-edittor/group-edittor.comp
 import { ShopDetailsComponent } from './shops/shop-details/shop-details.component';
 import { ShopListComponent } from './shops/shop-list/shop-list.component';
 import { StaffEditorComponent } from './shops/shop-details/staff-editor/staff-editor.component';
+import { ItemEditorComponent } from './items/item-editor/item-editor.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { StaffEditorComponent } from './shops/shop-details/staff-editor/staff-ed
     ShopDetailsComponent,
     ShopListComponent,
     StaffEditorComponent,
+    ItemEditorComponent,
   ],
   imports: [
     BrowserModule,

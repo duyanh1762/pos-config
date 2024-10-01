@@ -1,0 +1,46 @@
+<div class="container">
+  <div class="header-container" *ngIf="data.type === 'create'">
+    Tạo mới
+  </div>
+  <div class="header-container" *ngIf="data.type === 'edit'">
+    Thông tin
+  </div>
+  <div class="form-container">
+    <form #form="ngForm" (ngSubmit)="onSubmit()" novalidate>
+      <div class="form-input">
+        <label for="name">Tên món</label>
+        <input
+          name="name"
+          id="name"
+          placeholder="Nhập..."
+          [(ngModel)]="name"
+          required
+        />
+      </div>
+      <div class="form-input">
+        <label for="name">Giá</label>
+        <input
+          type="number"
+          name="price"
+          id="price"
+          placeholder="Nhập..."
+          [(ngModel)]="price"
+          required
+        />
+      </div>
+      <div class="form-input">
+        <label for="name">Nhóm</label>
+        <select name="group" id="group" [(ngModel)]="groupID" required>
+          <option *ngFor="let g of groups" [value]="g.id">{{ g.name }}</option>
+        </select>
+      </div>
+      <div class="form-input">
+        <label for="name">Chính sách</label>
+        <select name="policy" id="policy" [(ngModel)]="policyID" required>
+          <option *ngFor="let p of policies" [value]="p.id">{{ p.name }}</option>
+        </select>
+      </div>
+      <button type="submit" [disabled]="form.invalid">Xác nhận</button>
+    </form>
+  </div>
+</div>
