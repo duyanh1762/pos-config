@@ -27,6 +27,7 @@ export class ShopDetailsComponent implements OnInit {
   policies: Array<Policy> = [];
   staffs:Array<Staff> = [];
 
+
   constructor(private api: ApiService, private router: Router , private bsModal:BsModalService) {}
 
   ngOnInit(): void {

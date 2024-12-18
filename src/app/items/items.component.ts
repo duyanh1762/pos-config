@@ -4,6 +4,8 @@ import { ApiService } from '../service/api.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { DataRequest } from '../Interface/data_request';
 import { ItemEditorComponent } from './item-editor/item-editor.component';
+import { Policy } from '../Models/policy';
+import { filter, find, map } from 'rxjs';
 
 @Component({
   selector: 'app-items',
@@ -15,6 +17,7 @@ export class ItemsComponent implements OnInit {
 
   items:Array<Item> = [];
   itemsLU:Array<Item> = [];
+  policies:Array<any> = [];
 
   constructor(private api:ApiService , private bsModal: BsModalService) { }
 
@@ -29,6 +32,16 @@ export class ItemsComponent implements OnInit {
     this.api.item(request).subscribe((res:any)=>{
       this.items = [...res];
       this.itemsLU = [...res];
+    });
+    this.api.policy(request).pipe(map((res:any)=>{
+     return res.map((p:Policy)=>{
+        return {
+          id:p.id,
+          name:p.name
+        };
+      });
+    })).subscribe((res:any)=>{
+      this.policies = res;
     });
   }
   search(){
@@ -88,5 +101,11 @@ export class ItemsComponent implements OnInit {
 
       }
     });
+  }
+  getNamePolicy(idP:number):string{
+    let policy:any = this.policies.find((p:any)=>{
+      return p.id === idP;
+    });
+    return policy.name;
   }
 }
