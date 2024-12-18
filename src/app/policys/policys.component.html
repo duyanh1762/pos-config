@@ -17,7 +17,7 @@
 
     <div class="policy-item" *ngFor="let p of policies">
       <div class="policy-name">{{ p.name }}</div>
-      <p>{{ p.des }}</p>
+      <div class="policy-des">{{ p.des }}</div>
       <div class="policy-info">
         <button (click)="showPolicy(p)">Thông tin</button>
       </div>

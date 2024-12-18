@@ -8,6 +8,7 @@
   </div>
   <div class="item-list">
     <div class="item-item" *ngFor="let i of items">
+      <div class="item-id">{{ "HH" + i.id }}</div>
       <div class="item-name">{{ i.name }}</div>
       <div class="item-info">
         <button (click)="showItem(i)">Thông tin</button>
