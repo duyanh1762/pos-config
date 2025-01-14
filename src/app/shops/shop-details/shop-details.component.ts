@@ -18,6 +18,7 @@ interface DataInput {
   styleUrls: ['./shop-details.component.css'],
 })
 export class ShopDetailsComponent implements OnInit {
+  banks:Array<any> = [];
   data: DataInput;
   address: string = '';
   name: string = '';
@@ -26,6 +27,8 @@ export class ShopDetailsComponent implements OnInit {
   policyID: number | null = null;
   policies: Array<Policy> = [];
   staffs:Array<Staff> = [];
+  bankID:string = "";
+  account_no:string = "";
 
 
   constructor(private api: ApiService, private router: Router , private bsModal:BsModalService) {}
@@ -43,6 +46,10 @@ export class ShopDetailsComponent implements OnInit {
       type: localStorage.getItem('shop-type'),
       data: JSON.parse(localStorage.getItem('shop-infor') || '{}'),
     };
+    await this.api.banks().toPromise().then((res:any)=>{
+      console.log(res.data);
+      this.banks = res.data;
+    });
     await this.api.policy(request).toPromise().then((res:any)=>{
       this.policies = res;
     });
@@ -62,6 +69,8 @@ export class ShopDetailsComponent implements OnInit {
         this.password = this.data.data.password;
         this.policyID = this.data.data.policyID;
         this.table = this.data.data.number_table;
+        this.bankID = this.data.data.bankID;
+        this.account_no = this.data.data.account_no;
       }
     }
   }
@@ -114,7 +123,9 @@ export class ShopDetailsComponent implements OnInit {
         password:this.password,
         address:this.address,
         policyID:Number(this.policyID),
-        number_table:Number(this.table)
+        number_table:Number(this.table),
+        bankID:this.bankID,
+        account_no:this.account_no
       };
       let request:DataRequest = {
         mode:"create",
@@ -138,7 +149,9 @@ export class ShopDetailsComponent implements OnInit {
         password:this.password,
         address:this.address,
         policyID:Number(this.policyID),
-        number_table:Number(this.table)
+        number_table:Number(this.table),
+        bankID:this.bankID,
+        account_no:this.account_no
       };
       let request:DataRequest = {
         mode:"update",

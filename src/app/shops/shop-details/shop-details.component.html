@@ -44,6 +44,22 @@
         </select>
       </div>
       <div class="form-input">
+        <label for="descreption">Ngân hàng thụ hưởng</label>
+        <select name="bank-id" id="bank-id" [(ngModel)]="bankID" required >
+          <option *ngFor="let b of banks" [value]="b.bin">{{ b.name }}({{ b.short_name }})</option>
+        </select>
+      </div>
+      <div class="form-input">
+        <label for="descreption">Số tài khoản</label>
+        <input
+          name="account-no"
+          id="account-no"
+          placeholder="Nhập..."
+          [(ngModel)]="account_no"
+          required
+        />
+      </div>
+      <div class="form-input">
         <label for="descreption">Số bàn</label>
         <input
           name="table"
