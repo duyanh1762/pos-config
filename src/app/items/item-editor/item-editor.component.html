@@ -34,12 +34,12 @@
           <option *ngFor="let g of groups" [value]="g.id">{{ g.name }}</option>
         </select>
       </div>
-      <div class="form-input">
+      <!-- <div class="form-input">
         <label for="name">Chính sách</label>
         <select name="policy" id="policy" [(ngModel)]="policyID" required>
           <option *ngFor="let p of policies" [value]="p.id">{{ p.name }}</option>
         </select>
-      </div>
+      </div> -->
       <button type="submit" [disabled]="form.invalid">Xác nhận</button>
     </form>
   </div>

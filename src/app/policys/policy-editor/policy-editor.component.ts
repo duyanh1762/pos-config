@@ -1,9 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { BsModalRef } from 'ngx-bootstrap/modal';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { DataRequest } from 'src/app/Interface/data_request';
 import { Item } from 'src/app/Models/item';
 import { Policy } from 'src/app/Models/policy';
 import { ApiService } from 'src/app/service/api.service';
+import { AddItemComponent } from './add-item/add-item.component';
 interface DataInput {
   type: string; // create | edit
   data: number | Policy | any;
@@ -20,7 +21,8 @@ export class PolicyEditorComponent implements OnInit {
   descreption: string = '';
   date:string = '';
   items: Array<Item> = [];
-  constructor(private api: ApiService, private bsModalRef: BsModalRef) {}
+  itemsLU:Array<Item> = [];
+  constructor(private api: ApiService, private bsModalRef: BsModalRef,private bs:BsModalService) {}
 
   ngOnInit(): void {
     this.load();
@@ -35,10 +37,13 @@ export class PolicyEditorComponent implements OnInit {
         .item(request)
         .toPromise()
         .then((res: any) => {
+          this.itemsLU = res;
           res.forEach((i: Item) => {
-            if (i.policyID === this.data.data.id) {
-              this.items.push(i);
-            }
+            i.policyID.forEach((pID:number)=>{
+              if (pID=== this.data.data.id) {
+                this.items.push(i);
+              }
+            });
           });
         });
       this.name = this.data.data.name;
@@ -94,5 +99,18 @@ export class PolicyEditorComponent implements OnInit {
         }
       });
     }
+  }
+  addItem(){
+    this.bs.show(AddItemComponent,{
+      initialState:{
+        data:{
+          currentItems:this.items,
+          allItems:this.itemsLU,
+          policy:this.name,
+          pID:this.data.data.id
+        }
+      }
+    });
+    this.bsModalRef.hide();
   }
 }

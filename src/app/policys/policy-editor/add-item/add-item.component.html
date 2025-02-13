@@ -1,0 +1,12 @@
+<div class="container">
+  <div class="item-container">
+    <div class="title">
+      Thêm món cho {{ data.policy }}
+    </div>
+    <div class="item" [ngClass]="{'isChosen': i.isChosen === true}" *ngFor="let i of items" (click)="updateItem(i)">
+      <div class="name">{{ i.name }}</div>
+      <div class="price">{{ i.price }} vnđ</div>
+    </div>
+    <button class="btn-add" (click)="confrim()">Xác nhận</button>
+  </div>
+</div>

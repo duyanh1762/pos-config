@@ -19,6 +19,7 @@ import { ShopDetailsComponent } from './shops/shop-details/shop-details.componen
 import { ShopListComponent } from './shops/shop-list/shop-list.component';
 import { StaffEditorComponent } from './shops/shop-details/staff-editor/staff-editor.component';
 import { ItemEditorComponent } from './items/item-editor/item-editor.component';
+import { AddItemComponent } from './policys/policy-editor/add-item/add-item.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { ItemEditorComponent } from './items/item-editor/item-editor.component';
     ShopListComponent,
     StaffEditorComponent,
     ItemEditorComponent,
+    AddItemComponent,
   ],
   imports: [
     BrowserModule,

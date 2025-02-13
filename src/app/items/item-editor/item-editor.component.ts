@@ -25,7 +25,7 @@ export class ItemEditorComponent implements OnInit {
 
   name:string = "";
   price:number = 0;
-  policyID:number | null = null;
+  // policyID:number | null = null;
   groupID:number | null = null;
 
   constructor(private api:ApiService , private bsModalRef: BsModalRef) { }
@@ -43,7 +43,7 @@ export class ItemEditorComponent implements OnInit {
     if(this.data.type === "edit"){
       this.name = this.data.data.name;
       this.price = this.data.data.price;
-      this.policyID = this.data.data.policyID;
+      // this.policyID = this.data.data.policyID;
       this.groupID = this.data.data.groupID;
     }
   }
@@ -54,7 +54,7 @@ export class ItemEditorComponent implements OnInit {
         name:this.name,
         price:this.price,
         groupID:Number(this.groupID),
-        policyID:Number(this.policyID)
+        policyID:[0],
       };
       let request:DataRequest = {
         mode:"create",
@@ -75,7 +75,7 @@ export class ItemEditorComponent implements OnInit {
         name:this.name,
         price:this.price,
         groupID:Number(this.groupID),
-        policyID:Number(this.policyID)
+        policyID:this.data.data.policyID,
       };
       let request:DataRequest = {
         mode:"update",
