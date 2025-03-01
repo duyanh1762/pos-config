@@ -55,13 +55,6 @@ button[type="submit"] {
   cursor: pointer;
   outline: none;
 }
-.form-input input , .form-input select{
-  width: 100%;
-  padding: 10px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  outline: none;
-}
 
 button[type="submit"]:hover {
   background-color: #e67e22;

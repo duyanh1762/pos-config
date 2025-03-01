@@ -18,6 +18,7 @@ export class GroupEdittorComponent implements OnInit {
   @Output() respnose = new EventEmitter();
 
   name: string = '';
+  type: string = '';
   items: Array<Item> = [];
   constructor(private api: ApiService, private bsModalRef: BsModalRef) {}
 
@@ -42,13 +43,15 @@ export class GroupEdittorComponent implements OnInit {
           });
         });
       this.name = this.data.data.name;
+      this.type = this.data.data.type
     }
   }
   onSubmit(){
     if(this.data.type === "create"){
       let newGroup:Group = {
         id:0,
-        name:this.name
+        name:this.name,
+        type:this.type
       };
       let request: DataRequest = {
         mode:"create",
@@ -66,7 +69,8 @@ export class GroupEdittorComponent implements OnInit {
     }else{
       let updateGroup:Group = {
         id:this.data.data.id,
-        name:this.name
+        name:this.name,
+        type:this.type
       };
       let request:DataRequest = {
         mode:"update",

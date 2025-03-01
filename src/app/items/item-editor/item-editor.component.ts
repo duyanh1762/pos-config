@@ -39,7 +39,7 @@ export class ItemEditorComponent implements OnInit {
       data:""
     };
     await this.api.policy(request).toPromise().then((res:any)=>{this.policies = res});
-    await this.api.group(request).toPromise().then((res:any)=>{this.groups = res});
+    await this.api.group(request).toPromise().then((res:any)=>{this.groups = res.filter((g:Group)=>{ return g.type === "item"})});
     if(this.data.type === "edit"){
       this.name = this.data.data.name;
       this.price = this.data.data.price;

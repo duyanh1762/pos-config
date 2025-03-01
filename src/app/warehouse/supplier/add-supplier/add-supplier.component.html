@@ -8,7 +8,7 @@
   <div class="form-container">
     <form #form="ngForm" (ngSubmit)="onSubmit()" novalidate>
       <div class="form-input">
-        <label for="name">Tên nhóm</label>
+        <label for="name">Tên nhà cung cấp</label>
         <input
           name="name"
           id="name"
@@ -18,23 +18,16 @@
         />
       </div>
       <div class="form-input">
-        <label for="type">Dùng cho:</label>
-        <select name="type" id="type" [(ngModel)]="type">
-          <option value="item">Cửa hàng</option>
-          <option value="warehouse">Kho</option>
-          <option value="ff">Giao đồ ăn</option>
-        </select>
+        <label for="phone">Số điện thoại</label>
+        <input
+          name="phone"
+          id="phone"
+          placeholder="Nhập..."
+          [(ngModel)]="phone"
+          required
+        />
       </div>
       <button type="submit" [disabled]="form.invalid">Xác nhận</button>
     </form>
-  </div>
-  <div class="item-container" *ngIf="data.type === 'edit'">
-    <div class="title">
-      Danh sách món
-    </div>
-    <div class="item" *ngFor="let i of items">
-      <div class="name">{{ i.name }}</div>
-      <div class="price">{{ i.price }} vnđ</div>
-    </div>
   </div>
 </div>

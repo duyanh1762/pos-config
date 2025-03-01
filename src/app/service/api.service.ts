@@ -28,6 +28,12 @@ export class ApiService {
   public policy(request: DataRequest) {
     return this.http.post(this.server + 'policy', request);
   }
+  public supplier(request: DataRequest) {
+    return this.http.post(this.server + 'supplier', request);
+  }
+  public goods(request: DataRequest) {
+    return this.http.post(this.server + 'goods', request);
+  }
   public banks(){
     return this.http.get("https://api.vietqr.io/v2/banks");
   }

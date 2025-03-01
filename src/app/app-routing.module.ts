@@ -21,6 +21,8 @@ const routes: Routes = [
     {path:"items",component:ItemsComponent,canActivate:[LoginGuard]},
     {path:"groups",component:GroupsComponent,canActivate:[LoginGuard]},
     {path:"policys",component:PolicysComponent,canActivate:[LoginGuard]},
+    {path:"warehouse",loadChildren:() =>
+      import('./warehouse/warehouse.module').then((m) => m.WarehouseModule),},
     {path:"",redirectTo:"shops",pathMatch:"full"}
   ]},
   {path:"**",redirectTo:"home",pathMatch:"full"},

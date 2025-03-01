@@ -20,6 +20,7 @@ import { ShopListComponent } from './shops/shop-list/shop-list.component';
 import { StaffEditorComponent } from './shops/shop-details/staff-editor/staff-editor.component';
 import { ItemEditorComponent } from './items/item-editor/item-editor.component';
 import { AddItemComponent } from './policys/policy-editor/add-item/add-item.component';
+import { WarehouseModule } from './warehouse/warehouse.module';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { AddItemComponent } from './policys/policy-editor/add-item/add-item.comp
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
+    WarehouseModule,
     ModalModule.forRoot(),
   ],
   providers: [ApiService],
