@@ -5,6 +5,7 @@ import { GoodsComponent } from './goods/goods.component';
 import { RouterModule, Routes } from '@angular/router';
 import { AddSupplierComponent } from './supplier/add-supplier/add-supplier.component';
 import { FormsModule } from '@angular/forms';
+import { GoodsEditComponent } from './goods/goods-edit/goods-edit.component';
 
 let routes:Routes = [
   {path:"goods",component:GoodsComponent},
@@ -17,7 +18,8 @@ let routes:Routes = [
   declarations: [
     SupplierComponent,
     GoodsComponent,
-    AddSupplierComponent
+    AddSupplierComponent,
+    GoodsEditComponent
   ],
   imports: [
     CommonModule,
