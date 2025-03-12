@@ -37,6 +37,12 @@ export class ApiService {
   public banks(){
     return this.http.get("https://api.vietqr.io/v2/banks");
   }
+  public ieBill(request:DataRequest){
+    return this.http.post(this.server + 'ie-bill', request);
+  }
+  public ieDetail(request:DataRequest){
+    return this.http.post(this.server + 'ie-detail', request);
+  }
 
   dateTransform(dateTime:string){
     const date = new Date(dateTime);

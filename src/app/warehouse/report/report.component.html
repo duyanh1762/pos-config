@@ -1,0 +1,223 @@
+<div class="content">
+  <div class="report-header">
+    <!-- <a routerLink="/manage/report" class="back-link"
+      ><i class="fas fa-home"></i> Trở về</a
+    > -->
+  </div>
+  <div class="time-content">
+    <div class="report-title">
+      <h3>CHỌN THỜI GIAN:</h3>
+    </div>
+    <div class="date-picker-form">
+      <mat-form-field appearance="fill">
+        <mat-label>Ngày bắt đầu</mat-label>
+        <input matInput [matDatepicker]="startPicker" [(ngModel)]="startDate" (dateChange)="onStartDateChange($event.value)"/>
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="startPicker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #startPicker></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div class="date-picker-form">
+      <mat-form-field appearance="fill">
+        <mat-label>Ngày kết thúc</mat-label>
+        <input matInput [matDatepicker]="endPicker" [(ngModel)]="endDate" (dateChange)="onEndDateChange($event.value)" />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="endPicker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #endPicker></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div class="date-picker-button">
+      <button (click)="confirmDate()" class="date-picker-button">
+        Xác nhận
+      </button>
+    </div>
+  </div>
+  <div class="report-content">
+    <div class="card">
+      <h3>Đơn hàng xuất</h3>
+      <!-- <div class="filter">
+        <label for="status">Trạng thái:</label>
+        <select id="status" #selectStatus (change)="filter()">
+          <option value="all">Tất cả</option>
+          <option value="pay">Đã thanh toán</option>
+          <option value="not_pay">Chưa thanh toán</option>
+          <option value="delete">Đã huỷ</option>
+        </select>
+        <label for="status">Nhân sự:</label>
+        <select id="staff" #selectStaff (change)="filter()">
+          <option value="all">Tất cả</option>
+          <option value="{{ s.id }}" *ngFor="let s of staffs">
+            {{ s.name }}
+          </option>
+        </select>
+        <label for="status">Số bàn:</label>
+        <input
+          type="text"
+          placeholder="Nhập số bàn..."
+          #tableN
+          (change)="filter()"
+        />
+      </div> -->
+      <div class="bills">
+        <table>
+          <thead>
+            <tr>
+              <th class="col1" (click)="sortBills('table')">
+                Ngày tạo <i class="fa-solid fa-sort"></i>
+              </th>
+              <th class="col2" (click)="sortBills('date')">
+                Ngày nhận <i class="fa-solid fa-sort"></i>
+              </th>
+              <th class="col3" (click)="sortBills('total')">
+                Tổng tiền <i class="fa-solid fa-sort"></i>
+              </th>
+              <th class="col4">Trạng thái</th>
+              <th class="col5">Chi tiết</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let b of exportBills">
+              <td class="col1">{{ api.dateTransform(b.createAt) }}</td>
+              <td class="col2">{{ api.dateTransform(b.confirmAt)}}</td>
+              <td class="col3">{{ b.total }}đ</td>
+              <td
+                *ngIf="b.status === 'confirm'"
+                class="col4"
+              >
+                Đã giao
+              </td>
+              <td
+                *ngIf="b.status === 'not_cofirm'"
+                class="col4"
+              >
+                Chưa giao
+              </td>
+              <td
+                *ngIf="b.status === 'delete'"
+                class="col4"
+              >
+                Đã huỷ
+              </td>
+              <td class="col5"><button class="detail">Xem chi tiết</button></td>
+            </tr>
+          </tbody>
+        </table>
+        <!-- <div class="export">
+          <button *ngIf="export === true" (click)="exportReport('bills')">Xuất báo cáo</button>
+        </div> -->
+      </div>
+    </div>
+    <div class="card">
+      <h3>Đơn hàng nhập</h3>
+      <!-- <div class="filter">
+          <label for="status">Trạng thái:</label>
+          <select id="status" #selectStatus (change)="filter()">
+            <option value="all">Tất cả</option>
+            <option value="pay">Đã thanh toán</option>
+            <option value="not_pay">Chưa thanh toán</option>
+            <option value="delete">Đã huỷ</option>
+          </select>
+          <label for="status">Nhân sự:</label>
+          <select id="staff" #selectStaff (change)="filter()">
+            <option value="all">Tất cả</option>
+            <option value="{{ s.id }}" *ngFor="let s of staffs">
+              {{ s.name }}
+            </option>
+          </select>
+          <label for="status">Số bàn:</label>
+          <input
+            type="text"
+            placeholder="Nhập số bàn..."
+            #tableN
+            (change)="filter()"
+          />
+        </div> -->
+      <div class="bills">
+        <table>
+          <thead>
+            <tr>
+              <th class="col1" (click)="sortBills('table')">
+                Ngày tạo <i class="fa-solid fa-sort"></i>
+              </th>
+              <th class="col2" (click)="sortBills('date')">
+                Ngày nhận <i class="fa-solid fa-sort"></i>
+              </th>
+              <th class="col3" (click)="sortBills('total')">
+                Tổng tiền <i class="fa-solid fa-sort"></i>
+              </th>
+              <th class="col4">Trạng thái</th>
+              <th class="col5">Chi tiết</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let b of importBills">
+              <td class="col1">{{ api.dateTransform(b.createAt) }}</td>
+              <td class="col2">{{ api.dateTransform(b.confirmAt) }}</td>
+              <td class="col3">{{ b.total }}đ</td>
+              <td
+                *ngIf="b.status === 'confirm'"
+                class="col4"
+              >
+                Đã nhận
+              </td>
+              <td
+                *ngIf="b.status === 'not_cofirm'"
+                class="col4"
+              >
+                Chưa nhận
+              </td>
+              <td
+                *ngIf="b.status === 'delete'"
+                class="col4"
+              >
+                Đã huỷ
+              </td>
+              <td class="col5"><button class="detail">Xem chi tiết</button></td>
+            </tr>
+          </tbody>
+        </table>
+        <!-- <div class="export">
+            <button *ngIf="export === true" (click)="exportReport('bills')">Xuất báo cáo</button>
+          </div> -->
+      </div>
+    </div>
+    <div class="card">
+      <h3>Hàng hoá</h3>
+      <div class="bills">
+        <table>
+          <thead>
+            <tr>
+              <th class="cl1">Tên món</th>
+              <th class="cl2" (click)="sortGoods('num')">
+                Số lượng xuất <i class="fa-solid fa-sort"></i>
+              </th>
+              <th class="cl3" (click)="sortGoods('total')">
+                Số lượng nhập <i class="fa-solid fa-sort"></i>
+              </th>
+              <!-- <th class="cl4" (click)="sortGoods('percent')">
+                % <i class="fa-solid fa-sort"></i>
+              </th> -->
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container *ngFor="let g of goodsDetail">
+              <tr *ngIf="g.export > 0">
+                <td class="cl1">{{ g.name }}</td>
+                <td class="cl2">{{ g.export + g.unit }}</td>
+                <td class="cl3">{{ g.import + g.unit }}</td>
+                <!-- <td class="cl4">{{ g.percent }}%</td> -->
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
+        <!-- <div class="export">
+          <button *ngIf="export === true" (click)="exportReport('items')">Xuất báo cáo</button>
+        </div> -->
+      </div>
+    </div>
+  </div>
+</div>
