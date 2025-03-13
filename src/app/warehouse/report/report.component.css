@@ -330,3 +330,9 @@ thead .cl4:hover {
 .hide {
   display: none;
 }
+.filter-label{
+  font-size: small;
+}
+.hide{
+  display: none;
+}

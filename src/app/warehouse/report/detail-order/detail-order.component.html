@@ -1,0 +1,35 @@
+<div class="shopping-cart">
+  <div class="title" style="font-weight: 700; font-size: large" *ngIf="data.ie.type === 'export';else import">
+    Đơn hàng xuẩt ngày {{ api.dateTransform(data.ie.confirmAt).split(" ")[0] }}
+    <div class="shop">Cửa hàng: {{ data.ie.address }}</div>
+    <div class="staff">Tạo bởi: {{ data.ie.staff }}</div>
+  </div>
+  <div class="list-buy">
+    <div *ngFor="let i of listDetail">
+      <div class="item-buy" >
+        <div class="name-note">
+          <div class="id-i" style="display: none"></div>
+          <div class="name-i">{{ i.name }}</div>
+          <div class="note-i">{{ i.unit }}</div>
+        </div>
+        <div class="more">
+          <div class="number" >
+            x{{ i.num }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="bill">
+    <div class="bill-title">Tổng tiền:</div>
+    <div class="money">{{ data.ie.total | moneyTransform  }}đ</div>
+  </div>
+</div>
+
+<ng-template #import>
+  <div class="title" style="font-weight: 700; font-size: large">
+    Đơn hàng nhập ngày {{ api.dateTransform(data.ie.confirmAt).split(" ")[0] }}
+    <div class="shop">Nhà cung cấp: {{ data.ie.address }}</div>
+    <div class="staff">Tạo bởi: {{ data.ie.staff }}</div>
+  </div>
+</ng-template>

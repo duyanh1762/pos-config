@@ -36,32 +36,32 @@
       </button>
     </div>
   </div>
-  <div class="report-content">
+  <div class="report-content" [ngClass]="{hide: hide === true}">
     <div class="card">
       <h3>Đơn hàng xuất</h3>
-      <!-- <div class="filter">
-        <label for="status">Trạng thái:</label>
+      <div class="filter">
+        <!-- <label for="status">Trạng thái:</label>
         <select id="status" #selectStatus (change)="filter()">
           <option value="all">Tất cả</option>
           <option value="pay">Đã thanh toán</option>
           <option value="not_pay">Chưa thanh toán</option>
           <option value="delete">Đã huỷ</option>
-        </select>
-        <label for="status">Nhân sự:</label>
+        </select> -->
+        <!-- <label for="status">Nhân sự:</label>
         <select id="staff" #selectStaff (change)="filter()">
           <option value="all">Tất cả</option>
           <option value="{{ s.id }}" *ngFor="let s of staffs">
             {{ s.name }}
           </option>
-        </select>
-        <label for="status">Số bàn:</label>
+        </select> -->
+        <label for="status" class="filter-label">Lọc:</label>
         <input
           type="text"
-          placeholder="Nhập số bàn..."
-          #tableN
-          (change)="filter()"
+          placeholder="Nhập địa chỉ cửa hàng..."
+          #shopInput
+          (change)="filter('export')"
         />
-      </div> -->
+      </div>
       <div class="bills">
         <table>
           <thead>
@@ -75,7 +75,7 @@
               <th class="col3" (click)="sortBills('total')">
                 Tổng tiền <i class="fa-solid fa-sort"></i>
               </th>
-              <th class="col4">Trạng thái</th>
+              <th class="col4">Cửa hàng</th>
               <th class="col5">Chi tiết</th>
             </tr>
           </thead>
@@ -83,8 +83,9 @@
             <tr *ngFor="let b of exportBills">
               <td class="col1">{{ api.dateTransform(b.createAt) }}</td>
               <td class="col2">{{ api.dateTransform(b.confirmAt)}}</td>
-              <td class="col3">{{ b.total }}đ</td>
-              <td
+              <td class="col3">{{ b.total | moneyTransform }}đ</td>
+              <td class="col4">{{ b.address.split(",")[0] }}</td>
+              <!-- <td
                 *ngIf="b.status === 'confirm'"
                 class="col4"
               >
@@ -101,8 +102,8 @@
                 class="col4"
               >
                 Đã huỷ
-              </td>
-              <td class="col5"><button class="detail">Xem chi tiết</button></td>
+              </td> -->
+              <td class="col5"><button class="detail" (click)="showDetail(b)">Xem chi tiết</button></td>
             </tr>
           </tbody>
         </table>
@@ -113,8 +114,8 @@
     </div>
     <div class="card">
       <h3>Đơn hàng nhập</h3>
-      <!-- <div class="filter">
-          <label for="status">Trạng thái:</label>
+      <div class="filter">
+          <!-- <label for="status">Trạng thái:</label>
           <select id="status" #selectStatus (change)="filter()">
             <option value="all">Tất cả</option>
             <option value="pay">Đã thanh toán</option>
@@ -127,15 +128,15 @@
             <option value="{{ s.id }}" *ngFor="let s of staffs">
               {{ s.name }}
             </option>
-          </select>
-          <label for="status">Số bàn:</label>
+          </select> -->
+          <label for="status" class="filter-label">Lọc:</label>
           <input
             type="text"
-            placeholder="Nhập số bàn..."
-            #tableN
-            (change)="filter()"
+            placeholder="Nhập tên nhà cung cấp..."
+            #supplierInput
+            (change)="filter('import')"
           />
-        </div> -->
+        </div>
       <div class="bills">
         <table>
           <thead>
@@ -149,7 +150,7 @@
               <th class="col3" (click)="sortBills('total')">
                 Tổng tiền <i class="fa-solid fa-sort"></i>
               </th>
-              <th class="col4">Trạng thái</th>
+              <th class="col4">Nhà cung cấp</th>
               <th class="col5">Chi tiết</th>
             </tr>
           </thead>
@@ -157,8 +158,9 @@
             <tr *ngFor="let b of importBills">
               <td class="col1">{{ api.dateTransform(b.createAt) }}</td>
               <td class="col2">{{ api.dateTransform(b.confirmAt) }}</td>
-              <td class="col3">{{ b.total }}đ</td>
-              <td
+              <td class="col3">{{ b.total | moneyTransform }}đ</td>
+              <td class="col4">{{ b.address}}</td>
+              <!-- <td
                 *ngIf="b.status === 'confirm'"
                 class="col4"
               >
@@ -175,8 +177,8 @@
                 class="col4"
               >
                 Đã huỷ
-              </td>
-              <td class="col5"><button class="detail">Xem chi tiết</button></td>
+              </td> -->
+              <td class="col5"><button class="detail" (click)="showDetail(b)">Xem chi tiết</button></td>
             </tr>
           </tbody>
         </table>
@@ -205,7 +207,7 @@
           </thead>
           <tbody>
             <ng-container *ngFor="let g of goodsDetail">
-              <tr *ngIf="g.export > 0">
+              <tr *ngIf="g.export > 0 || g.import > 0">
                 <td class="cl1">{{ g.name }}</td>
                 <td class="cl2">{{ g.export + g.unit }}</td>
                 <td class="cl3">{{ g.import + g.unit }}</td>

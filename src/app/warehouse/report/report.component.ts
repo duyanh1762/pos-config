@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { BsModalService } from 'ngx-bootstrap/modal';
 import { DataRequest } from 'src/app/Interface/data_request';
 import { Goods } from 'src/app/Models/goods';
 import { IeBill } from 'src/app/Models/ie_bill';
@@ -7,6 +8,7 @@ import { Shop } from 'src/app/Models/shop';
 import { Staff } from 'src/app/Models/staff';
 import { Supplier } from 'src/app/Models/supplier';
 import { ApiService } from 'src/app/service/api.service';
+import { DetailOrderComponent } from './detail-order/detail-order.component';
 interface IeBillInfor {
   id: number;
   createAt: string;
@@ -35,8 +37,13 @@ interface GoodsDetail{
   styleUrls: ['./report.component.css'],
 })
 export class ReportComponent implements OnInit {
+  @ViewChild("shopInput",{read:ElementRef,static:true}) shopInput:ElementRef;
+  @ViewChild("supplierInput",{read:ElementRef,static:true}) suppInput:ElementRef;
+
   exportBills: Array<IeBillInfor> = [];
   importBills: Array<IeBillInfor> = [];
+  exportLU:Array<IeBillInfor> = [];
+  importLU:Array<IeBillInfor> = [];
   startDate: any;
   endDate: any;
   goodsDetail: Array<GoodsDetail> = [];
@@ -46,7 +53,9 @@ export class ReportComponent implements OnInit {
   goods: Array<Goods> = [];
   supplier:Array<Supplier> = [];
 
-  constructor(public api: ApiService) {}
+  hide:boolean = true;
+
+  constructor(public api: ApiService , private bsMS:BsModalService) {}
 
   ngOnInit(): void {
     this.load();
@@ -99,10 +108,44 @@ export class ReportComponent implements OnInit {
   }
   sortBills(data: any) {}
   sortGoods(data: any) {}
-  showDetail(id: number) {}
+  filter(type:string){
+    if(type === "export"){
+      this.exportBills = [];
+      let inputValue:string = this.shopInput.nativeElement.value;
+      if(inputValue.length <= 0){
+        this.exportBills = this.exportLU;
+      }else{
+        this.exportBills = this.exportLU.filter((ie:IeBillInfor)=>{
+          return this.api.removeAccents(ie.address).indexOf(this.api.removeAccents(inputValue)) != -1;
+        });
+      }
+    }else{
+      this.importBills = [];
+      let inputValue:string = this.suppInput.nativeElement.value;
+      if(inputValue.length <= 0){
+        this.importBills = this.importLU;
+      }else{
+        this.importBills = this.importLU.filter((ie:IeBillInfor)=>{
+          return this.api.removeAccents(ie.address).indexOf(this.api.removeAccents(inputValue)) != -1;
+        });
+      }
+    }
+  }
+  showDetail(b:IeBillInfor) {
+    this.bsMS.show(DetailOrderComponent,{
+      initialState:{
+        data:{
+          ie:b,
+          goods:this.goods,
+        }
+      }
+    });
+  }
   async confirmDate() {
     this.importBills = [];
+    this.importLU = [];
     this.exportBills = [];
+    this.exportLU = [];
     this.goodsDetail.forEach((gd:GoodsDetail)=>{
       gd.import = 0;
       gd.export = 0;
@@ -110,6 +153,7 @@ export class ReportComponent implements OnInit {
     if (this.endDate === undefined || this.startDate === undefined) {
       alert('Thời gian không phù hợp, hãy thử lại !');
     } else {
+      this.hide = false;
       let start: string = this.api.dateTransform(this.startDate);
       let end: string = this.api.dateTransform(this.endDate);
       let request: DataRequest = {
@@ -122,7 +166,7 @@ export class ReportComponent implements OnInit {
         .then(async(res: any) => {
           let ie:IeBill;
           for(ie of res){
-            if (ie.type === 'export') {
+            if (ie.type === 'export' && ie.status === "confirm") {
               let a:string = '';
               let s:string = '';
               let t:number = 0;
@@ -157,7 +201,8 @@ export class ReportComponent implements OnInit {
                 total:t,
               }
               this.exportBills.push(ieBI);
-            } else if (ie.type === 'import') {
+              this.exportLU.push(ieBI);
+            } else if (ie.type === 'import' && ie.status === "confirm") {
               let a:string = '';
               let s:string = '';
               let t:number = 0;
@@ -174,7 +219,7 @@ export class ReportComponent implements OnInit {
                       t = t + g.price * ied.num;
                       this.goodsDetail.forEach((gd:GoodsDetail)=>{
                         if(ied.itemID === gd.id){
-                          gd.export = gd.import + ied.num
+                          gd.import = gd.import + ied.num
                         }
                       });
                     }
@@ -188,6 +233,7 @@ export class ReportComponent implements OnInit {
                 total:t,
               }
               this.importBills.push(ieBI);
+              this.importLU.push(ieBI);
             }
           }
         });

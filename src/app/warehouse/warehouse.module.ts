@@ -8,10 +8,14 @@ import { FormsModule } from '@angular/forms';
 import { GoodsEditComponent } from './goods/goods-edit/goods-edit.component';
 import { OrderComponent } from './order/order.component';
 import { ReportComponent } from './report/report.component';
+import { DetailOrderComponent } from './report/detail-order/detail-order.component';
 
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
+
+import { MoneyTransformPipe } from '../Pipe/money-transform.pipe';
+
 
 let routes:Routes = [
   {path:"goods",component:GoodsComponent},
@@ -29,7 +33,9 @@ let routes:Routes = [
     AddSupplierComponent,
     GoodsEditComponent,
     OrderComponent,
-    ReportComponent
+    ReportComponent,
+    DetailOrderComponent,
+    MoneyTransformPipe,
   ],
   imports: [
     CommonModule,
