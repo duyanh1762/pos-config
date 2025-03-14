@@ -66,14 +66,14 @@
         <table>
           <thead>
             <tr>
-              <th class="col1" (click)="sortBills('table')">
-                Ngày tạo <i class="fa-solid fa-sort"></i>
+              <th class="col1" (click)="sort('export','createAt')">
+                Ngày tạo ↓ <i class="fa-solid fa-sort"></i>
               </th>
-              <th class="col2" (click)="sortBills('date')">
-                Ngày nhận <i class="fa-solid fa-sort"></i>
+              <th class="col2" (click)="sort('export','confirmAt')">
+                Ngày nhận ↓<i class="fa-solid fa-sort"></i>
               </th>
-              <th class="col3" (click)="sortBills('total')">
-                Tổng tiền <i class="fa-solid fa-sort"></i>
+              <th class="col3" (click)="sort('export','total')">
+                Tổng tiền ↓<i class="fa-solid fa-sort"></i>
               </th>
               <th class="col4">Cửa hàng</th>
               <th class="col5">Chi tiết</th>
@@ -141,14 +141,14 @@
         <table>
           <thead>
             <tr>
-              <th class="col1" (click)="sortBills('table')">
-                Ngày tạo <i class="fa-solid fa-sort"></i>
+              <th class="col1" (click)="sort('import','createAt')">
+                Ngày tạo ↓<i class="fa-solid fa-sort"></i>
               </th>
-              <th class="col2" (click)="sortBills('date')">
-                Ngày nhận <i class="fa-solid fa-sort"></i>
+              <th class="col2" (click)="sort('import','confirmAt')">
+                Ngày nhận ↓<i class="fa-solid fa-sort"></i>
               </th>
-              <th class="col3" (click)="sortBills('total')">
-                Tổng tiền <i class="fa-solid fa-sort"></i>
+              <th class="col3" (click)="sort('import','total')">
+                Tổng tiền ↓<i class="fa-solid fa-sort"></i>
               </th>
               <th class="col4">Nhà cung cấp</th>
               <th class="col5">Chi tiết</th>
@@ -194,11 +194,11 @@
           <thead>
             <tr>
               <th class="cl1">Tên món</th>
-              <th class="cl2" (click)="sortGoods('num')">
-                Số lượng xuất <i class="fa-solid fa-sort"></i>
+              <th class="cl2" (click)="sort('goods','export')">
+                Số lượng xuất ↓<i class="fa-solid fa-sort"></i>
               </th>
-              <th class="cl3" (click)="sortGoods('total')">
-                Số lượng nhập <i class="fa-solid fa-sort"></i>
+              <th class="cl3" (click)="sort('goods','import')">
+                Số lượng nhập ↓<i class="fa-solid fa-sort"></i>
               </th>
               <!-- <th class="cl4" (click)="sortGoods('percent')">
                 % <i class="fa-solid fa-sort"></i>

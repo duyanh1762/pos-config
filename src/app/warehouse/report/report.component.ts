@@ -54,6 +54,7 @@ export class ReportComponent implements OnInit {
   supplier:Array<Supplier> = [];
 
   hide:boolean = true;
+  sortType:string = "upper";
 
   constructor(public api: ApiService , private bsMS:BsModalService) {}
 
@@ -73,6 +74,7 @@ export class ReportComponent implements OnInit {
       this.endDate.setHours(23, 59, 59, 999);
     }
   }
+
   async load() {
     let request: DataRequest = {
       mode: 'get',
@@ -106,8 +108,184 @@ export class ReportComponent implements OnInit {
         this.supplier = res;
       });
   }
-  sortBills(data: any) {}
-  sortGoods(data: any) {}
+
+  sort(data:string,type:string){
+    if(data === "export"){
+      if(type === "confirmAt"){
+        for(let i = 0;i<this.exportBills.length;i++){
+          for(let j = i + 1;j<this.exportBills.length;j++){
+            let dateI = new Date(this.exportBills[i].confirmAt);
+            let dateJ = new Date(this.exportBills[j].confirmAt);
+            if(this.sortType === "upper"){
+              if(dateJ < dateI){
+                let temp:IeBillInfor = this.exportBills[i];
+                this.exportBills[i] = this.exportBills[j];
+                this.exportBills[j] = temp;
+              }
+            }else{
+              if(dateJ > dateI){
+                let temp:IeBillInfor = this.exportBills[i];
+                this.exportBills[i] = this.exportBills[j];
+                this.exportBills[j] = temp;
+              }
+            }
+          }
+        }
+      }else if(type === "createAt"){
+        for(let i = 0;i<this.exportBills.length;i++){
+          for(let j = i + 1;j<this.exportBills.length;j++){
+            let dateI = new Date(this.exportBills[i].createAt);
+            let dateJ = new Date(this.exportBills[j].createAt);
+            if(this.sortType === "upper"){
+              if(dateJ < dateI){
+                let temp:IeBillInfor = this.exportBills[i];
+                this.exportBills[i] = this.exportBills[j];
+                this.exportBills[j] = temp;
+              }
+            }else{
+              if(dateJ > dateI){
+                let temp:IeBillInfor = this.exportBills[i];
+                this.exportBills[i] = this.exportBills[j];
+                this.exportBills[j] = temp;
+              }
+            }
+          }
+        }
+      }else{
+        for(let i = 0;i<this.exportBills.length;i++){
+          for(let j = i + 1;j<this.exportBills.length;j++){
+            let totalI = this.exportBills[i].total;
+            let totalJ = this.exportBills[j].total;
+            if(this.sortType === "upper"){
+              if(totalJ < totalI){
+                let temp:IeBillInfor = this.exportBills[i];
+                this.exportBills[i] = this.exportBills[j];
+                this.exportBills[j] = temp;
+              }
+            }else{
+              if(totalJ > totalI){
+                let temp:IeBillInfor = this.exportBills[i];
+                this.exportBills[i] = this.exportBills[j];
+                this.exportBills[j] = temp;
+              }
+            }
+          }
+        }
+      }
+    }else if(data === "import"){
+      if(type === "confirmAt"){
+        for(let i = 0;i<this.importBills.length;i++){
+          for(let j = i + 1;j<this.importBills.length;j++){
+            let dateI = new Date(this.importBills[i].confirmAt);
+            let dateJ = new Date(this.importBills[j].confirmAt);
+            if(this.sortType === "upper"){
+              if(dateJ < dateI){
+                let temp:IeBillInfor = this.importBills[i];
+                this.importBills[i] = this.importBills[j];
+                this.importBills[j] = temp;
+              }
+            }else{
+              if(dateJ > dateI){
+                let temp:IeBillInfor = this.importBills[i];
+                this.importBills[i] = this.importBills[j];
+                this.importBills[j] = temp;
+              }
+            }
+          }
+        }
+      }else if(type === "createAt"){
+        for(let i = 0;i<this.importBills.length;i++){
+          for(let j = i + 1;j<this.importBills.length;j++){
+            let dateI = new Date(this.importBills[i].createAt);
+            let dateJ = new Date(this.importBills[j].createAt);
+            if(this.sortType === "upper"){
+              if(dateJ < dateI){
+                let temp:IeBillInfor = this.importBills[i];
+                this.importBills[i] = this.importBills[j];
+                this.importBills[j] = temp;
+              }
+            }else{
+              if(dateJ > dateI){
+                let temp:IeBillInfor = this.importBills[i];
+                this.importBills[i] = this.importBills[j];
+                this.importBills[j] = temp;
+              }
+            }
+          }
+        }
+      }else{
+        for(let i = 0;i<this.importBills.length;i++){
+          for(let j = i + 1;j<this.importBills.length;j++){
+            let totalI = this.importBills[i].total;
+            let totalJ = this.importBills[j].total;
+            if(this.sortType === "upper"){
+              if(totalJ < totalI){
+                let temp:IeBillInfor = this.importBills[i];
+                this.importBills[i] = this.importBills[j];
+                this.importBills[j] = temp;
+              }
+            }else{
+              if(totalJ > totalI){
+                let temp:IeBillInfor = this.importBills[i];
+                this.importBills[i] = this.importBills[j];
+                this.importBills[j] = temp;
+              }
+            }
+          }
+        }
+      }
+    }else if(data === "goods"){
+      if(type === "import"){
+        for(let i = 0;i<this.goodsDetail.length;i++){
+          for(let j = i + 1;j<this.goodsDetail.length;j++){
+            let importI = this.goodsDetail[i].import;
+            let importJ = this.goodsDetail[j].import;
+            if(this.sortType === "upper"){
+              if(importJ < importI){
+                let temp:GoodsDetail = this.goodsDetail[i];
+                this.goodsDetail[i] = this.goodsDetail[j];
+                this.goodsDetail[j] = temp;
+              }
+            }else{
+              if(importJ > importI){
+                let temp:GoodsDetail = this.goodsDetail[i];
+                this.goodsDetail[i] = this.goodsDetail[j];
+                this.goodsDetail[j] = temp;
+              }
+            }
+          }
+        }
+      }else{
+        for(let i = 0;i<this.goodsDetail.length;i++){
+          for(let j = i + 1;j<this.goodsDetail.length;j++){
+            let exportI = this.goodsDetail[i].export;
+            let exportJ = this.goodsDetail[j].export;
+            if(this.sortType === "upper"){
+              if(exportJ < exportI){
+                let temp:GoodsDetail = this.goodsDetail[i];
+                this.goodsDetail[i] = this.goodsDetail[j];
+                this.goodsDetail[j] = temp;
+              }
+            }else{
+              if(exportJ > exportI){
+                let temp:GoodsDetail = this.goodsDetail[i];
+                this.goodsDetail[i] = this.goodsDetail[j];
+                this.goodsDetail[j] = temp;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    if(this.sortType === "upper"){
+      this.sortType = "lower";
+    }else{
+      this.sortType = "upper";
+    }
+
+  }
+
   filter(type:string){
     if(type === "export"){
       this.exportBills = [];
