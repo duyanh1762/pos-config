@@ -16,7 +16,7 @@ interface IeBillInfor {
   staffID: number;
   shopID: number;
   status: string;
-  type: string; // import || export || delete
+  type: string; // import || export
   address: string;
   staff: string;
   total: number;

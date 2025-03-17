@@ -1,0 +1,219 @@
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  padding: 20px;
+}
+
+.order-content {
+  display: flex;
+  gap: 20px;
+}
+
+.orders {
+  width: 60%;
+  height: 400px;
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.orders h3, h3 {
+  margin-bottom: 10px;
+  font-weight: 700;
+  font-size: medium;
+}
+
+.orders ul {
+  list-style: none;
+}
+
+.orders li {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  cursor: pointer;
+}
+
+.orders table tr:hover {
+  background-color: #f1f1f1;
+  cursor: pointer;
+}
+
+.order-details {
+  width: 40%;
+  height: 400px;
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.order-details h3 {
+  margin-bottom: 10px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.orders table tbody{
+  display: block;
+  max-height: 300px;
+  overflow-y: auto;
+}
+.orders table thead{
+  display: block;
+  width: 100%;
+}
+.orders table thead tr,
+.orders table tbody tr {
+  display: table;
+  width: 100%;
+  height: 50px;
+  table-layout: fixed;
+}
+th, td {
+  /* border: 1px solid #ddd; */
+  padding: 10px;
+  text-align: left;
+}
+tr{
+  border-bottom:#ddd solid 1px;
+}
+tr td{
+  font-size: 14px;
+}
+th {
+  border-bottom:#ddd solid 1px;
+}
+.goods-content{
+  margin-top: 20px;
+  padding: 20px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.goods-content table{
+  margin-top: 10px;
+}
+.goods-content table button, .orders table button{
+  width:auto;
+  height: 40px;
+  background-color: #f39c12;
+  outline: none;
+  border: none;
+  border-radius: 4px;
+  font-size: 12px;
+  color: white;
+  padding:0 10px 0 10px;
+}
+.goods-content table button:hover,.orders table button:hover{
+  background-color: #e67e22;
+  cursor: pointer;
+}
+.list-buy{
+  height: 240px;
+  overflow-y: auto;
+  margin-top: 10px;
+}
+.list-buy .item-buy .item {
+  display: flex;
+  width: 100%;
+  height: auto;
+  justify-content: space-between;
+  box-sizing: border-box;
+  padding: 8px;
+  background-color: white;
+  border-top: #ddd solid 1px;
+  /* border-bottom:grey solid 1px; */
+}
+.more {
+  display: flex;
+}
+.more input{
+  width: 60px;
+  height: 30px;
+  outline: none;
+  border: gray solid 1px;
+  margin-right: 8px;
+  padding-left: 10px;
+}
+.more button {
+  width: 40px;
+  height: 30px;
+  border: #ddd solid 1px;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-left: 5%;
+  background-color:#f39c12 ;
+  color: white;
+  font-size: 12px;
+}
+.more button:hover {
+  background-color: #e67e22;
+  cursor: pointer;
+}
+.unit{
+  width: 40px;
+  padding-left: 10px;
+  font-size: 16px;
+  font-style: italic;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.unit:hover{
+  cursor:help;
+}
+.infor{
+  display: flex;
+  justify-content: space-between;
+  margin-top:10px;
+}
+.infor .title , .infor .money{
+  font-size: 14px;
+  font-weight: 600;
+}
+.shop ,.staff{
+  font-size: 14px;
+  font-weight: 600;
+}
+.shop,.staff,.list-buy,.infor{
+  margin-left: 10px;
+}
+tbody::-webkit-scrollbar,
+.list-buy::-webkit-scrollbar {
+  width: 2px; /* Change this value to adjust scrollbar width */
+}
+
+tbody::-webkit-scrollbar-thumb,
+.list-buy::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 4px; /* Rounded corners */
+}
+
+tbody::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}
+
+tbody::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+  border-radius: 4px;
+}
+.warning{
+  color: red;
+}
+@media (max-width: 768px) {
+  .order-contentt {
+      flex-direction: column;
+  }
+
+  .orders, .order-details {
+      width: 100%;
+  }
+}

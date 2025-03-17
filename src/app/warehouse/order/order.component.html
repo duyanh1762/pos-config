@@ -1,1 +1,101 @@
-<p>order works!</p>
+<div class="content">
+  <div class="order-content">
+      <div class="orders">
+          <h3>Đơn xuất chưa xác nhận</h3>
+          <table *ngIf="exportBills.length > 0;else noticeExport ">
+            <thead>
+                <tr>
+                    <th>Cửa hàng</th>
+                    <th>Thời gian tạo</th>
+                    <th>Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let e of exportBills" (click)="getExportInfor(e)">
+                    <td>{{ e.address.split(",")[0] }}</td>
+                    <td>{{ api.dateTransform(e.createAt) }}</td>
+                    <td ><button>Xác nhận</button></td>
+                </tr>
+            </tbody>
+        </table>
+      </div>
+      <div class="order-details">
+        <div class="detail" *ngIf="exportDetail.length > 0; else noticeDetail">
+          <h3>Chi tiết đơn xuất</h3>
+          <div class="shop">
+            Đại chỉ: {{ address }}
+          </div>
+          <div class="staff">
+            Nhân sự: {{ user }}
+          </div>
+          <div class="list-buy">
+              <div class="item-buy" >
+
+                <div class="item" *ngFor="let d of exportDetail">
+                  <div class="name-note">
+                    <div class="name-i">{{ d.name }}</div>
+                  </div>
+                  <div class="more">
+                    <input type="number"  min="1" [(ngModel)]="d.num" />
+                    <div class="unit" [title]="d.unit" >{{ d.unit }}</div>
+                    <bUtton >x</bUtton>
+                  </div>
+                </div>
+
+              </div>
+          </div>
+          <div class="infor">
+            <div class="title">Tồng tiền</div>
+            <div class="money">{{ totalBill | moneyTransform}}đ</div>
+          </div>
+        </div>
+      </div>
+  </div>
+  <div class="goods-content">
+    <h3>Hàng hoá</h3>
+    <div class="bills" *ngIf="GoodsInfor.length > 0;else noticeGoods">
+      <table>
+        <thead>
+          <tr>
+            <th class="cl1">Tên món</th>
+            <th class="cl2" >
+              Số lượng cần xuất
+            </th>
+            <th class="cl3">
+              Số lượng còn lại
+            </th>
+            <th class="cl4">
+              Còn thiếu
+            </th>
+            <th class="cl5">
+              Hành động
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr *ngFor="let g of GoodsInfor">
+            <td class="cl1">{{ g.name }}</td>
+            <td class="cl2">{{ g.export }} {{ g.unit }}</td>
+            <td class="cl3">{{ g.remaining }} {{ g.unit }}</td>
+            <td class="cl4" [ngClass]="{warning: g.remaining - g.export < 0}" *ngIf="g.remaining - g.export < 0;else noticeGD">{{ g.remaining - g.export }} {{ g.unit }}</td>
+            <td class="cl5"><button>Tạo đơn nhập</button></td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<ng-template #noticeExport>
+  <p style="font-size: 14px;font-style: italic;text-align: center;">Không có đơn xuất chưa xác nhận !</p>
+</ng-template>
+<ng-template #noticeDetail>
+  <p style="font-size: 14px;font-style: italic;text-align: center;">Chọn 1 đơn hàng ở mục Đơn xuất chưa xác nhận !</p>
+</ng-template>
+<ng-template #noticeGoods>
+  <p style="font-size: 14px;font-style: italic;text-align: center;">Không có hàng hoá cần thống kê !</p>
+</ng-template>
+<ng-template #noticeGD>
+  <td class="cl4">0</td>
+</ng-template>
