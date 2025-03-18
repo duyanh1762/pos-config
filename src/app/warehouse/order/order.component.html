@@ -14,7 +14,7 @@
                 <tr *ngFor="let e of exportBills" (click)="getExportInfor(e)">
                     <td>{{ e.address.split(",")[0] }}</td>
                     <td>{{ api.dateTransform(e.createAt) }}</td>
-                    <td ><button>Xác nhận</button></td>
+                    <td ><button (click)="confirmBill(e)">Xác nhận</button></td>
                 </tr>
             </tbody>
         </table>
@@ -23,7 +23,7 @@
         <div class="detail" *ngIf="exportDetail.length > 0; else noticeDetail">
           <h3>Chi tiết đơn xuất</h3>
           <div class="shop">
-            Đại chỉ: {{ address }}
+            Địa chỉ: {{ address }}
           </div>
           <div class="staff">
             Nhân sự: {{ user }}
@@ -31,22 +31,27 @@
           <div class="list-buy">
               <div class="item-buy" >
 
-                <div class="item" *ngFor="let d of exportDetail">
-                  <div class="name-note">
-                    <div class="name-i">{{ d.name }}</div>
+                <ng-container *ngFor="let d of exportDetail">
+                  <div class="item" *ngIf="d.num > 0">
+                    <div class="name-note">
+                      <div class="name-i">{{ d.name }}</div>
+                    </div>
+                    <div class="more">
+                      <input type="number"  min="1" [(ngModel)]="d.num" (change)="onInputChange()"/>
+                      <div class="unit" [title]="d.unit" >{{ d.unit }}</div>
+                      <bUtton (click)="delete(d)">x</bUtton>
+                    </div>
                   </div>
-                  <div class="more">
-                    <input type="number"  min="1" [(ngModel)]="d.num" />
-                    <div class="unit" [title]="d.unit" >{{ d.unit }}</div>
-                    <bUtton >x</bUtton>
-                  </div>
-                </div>
+                </ng-container>
 
               </div>
           </div>
           <div class="infor">
-            <div class="title">Tồng tiền</div>
+            <div class="title">Tồng tiền:</div>
             <div class="money">{{ totalBill | moneyTransform}}đ</div>
+          </div>
+          <div class="change">
+            <button [ngClass]="{edited: edited === true}" (click)="update()">Thay đổi</button>
           </div>
         </div>
       </div>
@@ -73,15 +78,15 @@
           </tr>
         </thead>
         <tbody>
-
-          <tr *ngFor="let g of GoodsInfor">
-            <td class="cl1">{{ g.name }}</td>
-            <td class="cl2">{{ g.export }} {{ g.unit }}</td>
-            <td class="cl3">{{ g.remaining }} {{ g.unit }}</td>
-            <td class="cl4" [ngClass]="{warning: g.remaining - g.export < 0}" *ngIf="g.remaining - g.export < 0;else noticeGD">{{ g.remaining - g.export }} {{ g.unit }}</td>
-            <td class="cl5"><button>Tạo đơn nhập</button></td>
-          </tr>
-
+          <ng-container *ngFor="let g of GoodsInfor">
+            <tr *ngIf="g.export > 0">
+              <td class="cl1">{{ g.name }}</td>
+              <td class="cl2">{{ g.export }} {{ g.unit }}</td>
+              <td class="cl3">{{ g.remaining }} {{ g.unit }}</td>
+              <td class="cl4" [ngClass]="{warning: g.remaining - g.export < 0}" *ngIf="g.remaining - g.export < 0;else noticeGD">{{ g.remaining - g.export }} {{ g.unit }}</td>
+              <td class="cl5"><button>Tạo đơn nhập</button></td>
+            </tr>
+          </ng-container>
         </tbody>
       </table>
     </div>

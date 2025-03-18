@@ -16,7 +16,7 @@ body {
 
 .orders {
   width: 60%;
-  height: 400px;
+  height: 450px;
   background: white;
   padding: 20px;
   border-radius: 8px;
@@ -46,7 +46,7 @@ body {
 
 .order-details {
   width: 40%;
-  height: 400px;
+  height: 450px;
   background: white;
   padding: 20px;
   border-radius: 8px;
@@ -207,6 +207,26 @@ tbody::-webkit-scrollbar-track {
 }
 .warning{
   color: red;
+}
+.name-i,.unit{
+  font-size: 14px;
+}
+.change{
+  text-align: center;
+  margin-top: 20px;
+}
+.change button{
+  width: 200px;
+  height: 40px;
+  color: white;
+  border: none;
+  border-radius: 4px;
+}
+.edited{
+  background-color:#f39c12;
+}
+.edited:hover{
+  background-color: #e67e22;
 }
 @media (max-width: 768px) {
   .order-contentt {

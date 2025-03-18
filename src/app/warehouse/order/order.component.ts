@@ -56,8 +56,10 @@ export class OrderComponent implements OnInit {
   exportDetail:Array<DetailInfor> = [];
 
   totalBill:number = 0;
-  address:string = ""
+  address:string = "";
   user:string = "";
+  edited:boolean = false;
+  idExport:number = 0;
 
   constructor(public api:ApiService,private bsMS:BsModalService) { }
 
@@ -66,7 +68,6 @@ export class OrderComponent implements OnInit {
   }
 
   async load(){
-    let goodsFilter:Array<GoodsDetail> = [];
     let request:DataRequest = {
       mode:"get",
       data:""
@@ -80,13 +81,120 @@ export class OrderComponent implements OnInit {
     await this.api.goods(request).toPromise().then((res:any)=>{
       this.goods = res;
     });
-    this.goods.forEach((g:Goods)=>{
-      goodsFilter.push({...g,export:0});
-    });
     await this.api.supplier(request).toPromise().then((res:any)=>{
       this.suppliers = res;
     });
-    await this.api.ieBill(request).toPromise().then(async (res:any)=>{
+    this.resetBills();
+  }
+ async getExportInfor(exBill:IeBillInfor){
+  if(this.edited === true){
+    alert("Hãy lưu lại hoá đơn hiện tại trước khi chọn hoá đơn khác");
+  }else{
+    this.exportDetail = [];
+    this.totalBill = 0;
+    this.address = exBill.address;
+    this.user = exBill.staff;
+    this.idExport = exBill.id;
+    await this.api.ieDetail({mode:"get",data:Number(exBill.id)}).toPromise().then((res:any)=>{
+      res.forEach((ied:IeDetail)=>{
+        let n:string = "";
+        let u:string = "";
+        this.goods.forEach((g:Goods)=>{
+          if(g.id === ied.itemID){
+            n = g.name;
+            u = g.unit;
+            this.totalBill = this.totalBill + ied.num * g.price;
+          }
+        });
+        this.exportDetail.push({...ied,name:n,unit:u});
+      });
+    });
+  }
+  }
+
+  onInputChange(){
+    this.edited = true;
+    this.getTottalBill();
+  }
+  delete(ied:DetailInfor){
+    this.edited = true;
+    this.exportDetail.forEach((d:DetailInfor)=>{
+      if(d.id === ied.id){
+        d.num = 0;
+      }
+    });
+    this.getTottalBill();
+  }
+ async update(){
+    if(this.edited === true){
+      let newExportList:Array<DetailInfor> = this.exportDetail.filter((d:DetailInfor)=>{
+        return d.num > 0;
+      });
+      if(newExportList.length > 0){
+        let ied:DetailInfor;
+        for(ied of this.exportDetail){
+          if(ied.num > 0){
+            let uIeDetail:IeDetail = {
+              id:ied.id,
+              itemID:ied.itemID,
+              num:ied.num,
+              note:ied.note,
+              ieID:ied.ieID
+            };
+            this.api.ieDetail({mode:"update",data:uIeDetail}).subscribe((res:any)=>{
+              if(res.affected !=1){
+                alert("Đã có lỗi xảy ra !");
+              }
+            });
+          }else{
+            let deleteID:number = ied.id;
+            this.api.ieDetail({mode:"delete",data:deleteID}).subscribe((res:any)=>{});
+          }
+        };
+        this.resetBills();
+        alert("Cập nhật thành công !")
+        this.edited = false;
+      }else{
+        if(confirm("Bạn muốn huỷ đơn xuất này ?")){
+          for(let b of this.exportBills){
+            if(b.id === this.idExport){
+              let uIE:IeBill = {
+                id: b.id,
+                createAt: b.createAt,
+                confirmAt: b.confirmAt,
+                staffID: b.staffID,
+                shopID: b.shopID,
+                status: "delete",
+                type: b.type
+              };
+              await this.api.ieBill({mode:"update",data:uIE}).toPromise().then((res:any)=>{
+                if(res.affected === 1){
+                  alert("Huỷ đơn xuất thành công !");
+                  this.exportDetail = [];
+                  this.totalBill = 0;
+                  this.address = "";
+                  this.user = "";
+                  this.idExport = 0;
+                }
+              });
+            }
+          }
+          this.resetBills();
+          this.edited = false;
+        }else{
+          this.edited = false;
+        }
+      }
+    }
+  }
+  async resetBills(){
+    this.exportBills = [];
+    this.GoodsInfor = [];
+    let goodsFilter:Array<GoodsDetail>= [];
+    this.goods.forEach((g:Goods)=>{
+      goodsFilter.push({...g,export:0});
+    });
+    await this.api.ieBill({mode:"get",data:""}).toPromise().then(async (res:any)=>{
       let ie:IeBill;
       for(ie of res){
         if(ie.status === "not_confirm" && ie.type === "export"){
@@ -120,24 +228,51 @@ export class OrderComponent implements OnInit {
       return g.export > 0;
     });
   }
- async getExportInfor(exBill:IeBillInfor){
-    this.exportDetail = [];
+
+  getTottalBill():number{
     this.totalBill = 0;
-    this.address = exBill.address;
-    this.user = exBill.staff;
-    await this.api.ieDetail({mode:"get",data:Number(exBill.id)}).toPromise().then((res:any)=>{
-      res.forEach((ied:IeDetail)=>{
-        let n:string = "";
-        let u:string = "";
-        this.goods.forEach((g:Goods)=>{
-          if(g.id === ied.itemID){
-            n = g.name;
-            u = g.unit;
-            this.totalBill = this.totalBill + ied.num * g.price;
-          }
-        });
-        this.exportDetail.push({...ied,name:n,unit:u});
+    this.exportDetail.forEach((d:DetailInfor)=>{
+      this.goods.forEach((g:Goods)=>{
+        if(g.id === d.itemID){
+          this.totalBill = this.totalBill + d.num * g.price;
+        }
       });
+    });
+    return this.totalBill;
+  }
+  async confirmBill(ex:IeBillInfor){
+    for(let d of this.exportDetail){
+      for(let g of this.goods){
+        if(d.itemID === g.id){
+          g.remaining = g.remaining - d.num;
+          if(g.remaining <= 0){
+            g.remaining = 0;
+          }
+          this.api.goods({mode:"update",data:g}).subscribe((res:any)=>{});
+        }
+      };
+    };
+    let uExport:IeBill = {
+      id: ex.id,
+      createAt: ex.createAt,
+      confirmAt: this.api.getCurrentDateTime(),
+      staffID: ex.staffID,
+      shopID: ex.shopID,
+      status: "confirm",
+      type: ex.type
+    }
+    await this.api.ieBill({mode:"update",data:uExport}).toPromise().then((res:any)=>{
+      if(res.affected === 1){
+        alert("Đã xác nhận đơn xuất !");
+        this.resetBills();
+        this.exportDetail = [];
+        this.totalBill = 0;
+        this.address = "";
+        this.user = "";
+        this.idExport = 0;
+      }else{
+        alert("Đã có lỗi xảy ra !");
+      }
     });
   }
 }
