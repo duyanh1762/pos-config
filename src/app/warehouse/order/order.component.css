@@ -220,6 +220,7 @@ tbody::-webkit-scrollbar-track {
   height: 40px;
   color: white;
   border: none;
+  outline: none;
   border-radius: 4px;
 }
 .edited{

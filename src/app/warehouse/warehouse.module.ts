@@ -15,12 +15,14 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 
 import { MoneyTransformPipe } from '../Pipe/money-transform.pipe';
+import { CreateOrderComponent } from './order/create-order/create-order.component';
 
 
 let routes:Routes = [
   {path:"goods",component:GoodsComponent},
   {path:"supplier",component:SupplierComponent},
   {path:"order",component:OrderComponent},
+  {path:"order/create",component:CreateOrderComponent},
   {path:"report",component:ReportComponent},
   {path:"",redirectTo:"goods",pathMatch:"full"},
   {path:"**",redirectTo:"",pathMatch:"full"}
@@ -36,6 +38,7 @@ let routes:Routes = [
     ReportComponent,
     DetailOrderComponent,
     MoneyTransformPipe,
+    CreateOrderComponent,
   ],
   imports: [
     CommonModule,

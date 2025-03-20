@@ -84,7 +84,7 @@
               <td class="cl2">{{ g.export }} {{ g.unit }}</td>
               <td class="cl3">{{ g.remaining }} {{ g.unit }}</td>
               <td class="cl4" [ngClass]="{warning: g.remaining - g.export < 0}" *ngIf="g.remaining - g.export < 0;else noticeGD">{{ g.remaining - g.export }} {{ g.unit }}</td>
-              <td class="cl5"><button>Tạo đơn nhập</button></td>
+              <td class="cl5"><button (click)="createImport(g)">Tạo đơn nhập</button></td>
             </tr>
           </ng-container>
         </tbody>

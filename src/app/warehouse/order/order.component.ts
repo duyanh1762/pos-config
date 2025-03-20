@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { DataRequest } from 'src/app/Interface/data_request';
 import { Goods } from 'src/app/Models/goods';
@@ -61,7 +62,7 @@ export class OrderComponent implements OnInit {
   edited:boolean = false;
   idExport:number = 0;
 
-  constructor(public api:ApiService,private bsMS:BsModalService) { }
+  constructor(public api:ApiService,private bsMS:BsModalService,private router: Router) { }
 
   ngOnInit(): void {
     this.load();
@@ -241,38 +242,47 @@ export class OrderComponent implements OnInit {
     return this.totalBill;
   }
   async confirmBill(ex:IeBillInfor){
-    for(let d of this.exportDetail){
-      for(let g of this.goods){
-        if(d.itemID === g.id){
-          g.remaining = g.remaining - d.num;
-          if(g.remaining <= 0){
-            g.remaining = 0;
+    if(confirm("Bạn muốn xác nhận đơn xuất đến địa chỉ: " + ex.address + " ?")){
+      for(let d of this.exportDetail){
+        for(let g of this.goods){
+          if(d.itemID === g.id){
+            g.remaining = g.remaining - d.num;
+            if(g.remaining <= 0){
+              g.remaining = 0;
+            }
+            this.api.goods({mode:"update",data:g}).subscribe((res:any)=>{});
           }
-          this.api.goods({mode:"update",data:g}).subscribe((res:any)=>{});
-        }
+        };
       };
-    };
-    let uExport:IeBill = {
-      id: ex.id,
-      createAt: ex.createAt,
-      confirmAt: this.api.getCurrentDateTime(),
-      staffID: ex.staffID,
-      shopID: ex.shopID,
-      status: "confirm",
-      type: ex.type
-    }
-    await this.api.ieBill({mode:"update",data:uExport}).toPromise().then((res:any)=>{
-      if(res.affected === 1){
-        alert("Đã xác nhận đơn xuất !");
-        this.resetBills();
-        this.exportDetail = [];
-        this.totalBill = 0;
-        this.address = "";
-        this.user = "";
-        this.idExport = 0;
-      }else{
-        alert("Đã có lỗi xảy ra !");
+      let uExport:IeBill = {
+        id: ex.id,
+        createAt: ex.createAt,
+        confirmAt: this.api.getCurrentDateTime(),
+        staffID: ex.staffID,
+        shopID: ex.shopID,
+        status: "confirm",
+        type: ex.type
       }
-    });
+      await this.api.ieBill({mode:"update",data:uExport}).toPromise().then((res:any)=>{
+        if(res.affected === 1){
+          alert("Đã xác nhận đơn xuất !");
+          this.resetBills();
+          this.exportDetail = [];
+          this.totalBill = 0;
+          this.address = "";
+          this.user = "";
+          this.idExport = 0;
+        }else{
+          alert("Đã có lỗi xảy ra !");
+        }
+      });
+    }
+  }
+  createImport(g:Goods){
+    if(localStorage.getItem("goods-infor")){
+      localStorage.removeItem("goods-infor");
+    }
+    localStorage.setItem("goods-infor",JSON.stringify(g));
+    this.router.navigate(["/home/warehouse/order/create"]);
   }
 }
