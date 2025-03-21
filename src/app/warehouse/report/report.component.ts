@@ -39,6 +39,8 @@ interface GoodsDetail{
 export class ReportComponent implements OnInit {
   @ViewChild("shopInput",{read:ElementRef,static:true}) shopInput:ElementRef;
   @ViewChild("supplierInput",{read:ElementRef,static:true}) suppInput:ElementRef;
+  @ViewChild("shopSelect",{read:ElementRef,static:true}) shopSelect:ElementRef;
+  @ViewChild("supplierSelect",{read:ElementRef,static:true}) suppSelect:ElementRef;
 
   exportBills: Array<IeBillInfor> = [];
   importBills: Array<IeBillInfor> = [];
@@ -415,6 +417,29 @@ export class ReportComponent implements OnInit {
             }
           }
         });
+    }
+  }
+  filterSelect(type:string){
+    if(type === "export"){
+      this.exportBills = [];
+      let address:string = this.shopSelect.nativeElement.value;
+      if(address === ""){
+        this.exportBills = this.exportLU;
+      }else{
+        this.exportBills = this.exportLU.filter((ex:IeBillInfor)=>{
+          return ex.address === address;
+        });
+      }
+    }else if(type === "import"){
+      this.importBills = [];
+      let nameSupp:string = this.suppSelect.nativeElement.value;
+      if(nameSupp === ""){
+        this.importBills = this.importLU;
+      }else{
+        this.importBills = this.importLU.filter((im:IeBillInfor)=>{
+          return im.address === nameSupp;
+        });
+      }
     }
   }
 }

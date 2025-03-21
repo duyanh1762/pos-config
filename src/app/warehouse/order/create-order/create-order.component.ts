@@ -2,6 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataRequest } from 'src/app/Interface/data_request';
 import { Goods } from 'src/app/Models/goods';
+import { Group } from 'src/app/Models/group';
 import { IeBill } from 'src/app/Models/ie_bill';
 import { IeDetail } from 'src/app/Models/ie_detail';
 import { Supplier } from 'src/app/Models/supplier';
@@ -35,6 +36,7 @@ interface GoodsInfor {
 })
 export class CreateOrderComponent implements OnInit {
   @ViewChild("searchInput",{read:ElementRef,static:true}) searchInput:ElementRef;
+  @ViewChild("groupSelect",{read:ElementRef,static:true}) groupSelect:ElementRef;
 
   date: String;
   goods: Array<GoodsInfor> = [];
@@ -44,6 +46,7 @@ export class CreateOrderComponent implements OnInit {
   type: string = 'create'; //edit || create
   suppliers:Array<Supplier> = [];
   supplierID:number = 0;
+  groups:Array<Group> = [];
 
   constructor(private api:ApiService,private router:Router) { }
 
@@ -58,6 +61,13 @@ export class CreateOrderComponent implements OnInit {
       mode: 'get',
       data: '',
     };
+    await this.api.group(request).toPromise().then((res:any)=>{
+      res.forEach((g:Group)=>{
+        if(g.type === "warehouse"){
+          this.groups.push(g);
+        }
+      });
+    });
     await this.api
       .goods(request)
       .toPromise()
@@ -179,8 +189,8 @@ export class CreateOrderComponent implements OnInit {
       let acceptItems:Array<IeDetailInfor> = this.cart.filter((ci:IeDetailInfor)=>{
         return ci.num > 0;
       });
-      if(acceptItems.length <= 0){
-        alert("Chọn ít nhất 1 mặt hàng để lưu đơn !")
+      if(acceptItems.length <= 0 || this.supplierID === 0){
+        alert("Chọn ít nhất 1 mặt hàng và nhà cung cấp để tạo đơn !")
       }else{
         let newIE:IeBill = {
           id:0,
@@ -234,6 +244,17 @@ export class CreateOrderComponent implements OnInit {
           }
         });
       }
+  }
+  filterSelect(){
+    this.goods = [];
+    let grID:number = Number(this.groupSelect.nativeElement.value);
+    if(grID === 0){
+      this.goods = this.goodsLU;
+    }else{
+      this.goods = this.goodsLU.filter((g:GoodsInfor)=>{
+        return g.groupID === grID;
+      });
+    }
   }
   back(){
     this.router.navigate(["/home/warehouse/order"]);

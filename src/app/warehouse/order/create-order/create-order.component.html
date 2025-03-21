@@ -8,6 +8,12 @@
         (keyup)="search()"
       />
     </div>
+    <div class="search">
+      <select #groupSelect name="group" id="group" (change)="filterSelect()">
+        <option value="0">Tất cả</option>
+        <option *ngFor="let g of groups" [value]="g.id">{{ g.name }}</option>
+      </select>
+    </div>
     <div class="drinks">
       <div *ngFor="let g of goods">
         <div class="img">
@@ -70,7 +76,7 @@
       <div class="bill-title">Tổng tiền:</div>
       <div class="money">{{ total | moneyTransform }}đ</div>
       <div class="confirm">
-        <button (click)="save()">Lưu</button>
+        <button (click)="save()">Tạo đơn</button>
         <button (click)="back()" style="margin-top: 10px">Trở về</button>
       </div>
     </div>

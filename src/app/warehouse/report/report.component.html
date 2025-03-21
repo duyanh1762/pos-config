@@ -54,13 +54,18 @@
             {{ s.name }}
           </option>
         </select> -->
-        <label for="status" class="filter-label">Lọc:</label>
+        <label for="address" class="filter-label">Lọc:</label>
         <input
           type="text"
           placeholder="Nhập địa chỉ cửa hàng..."
           #shopInput
           (change)="filter('export')"
         />
+        <label for="address" class="filter-label">hoặc</label>
+        <select #shopSelect name="shop" id="shop" (change)="filterSelect('export')">
+          <option value=""> Tất cả</option>
+          <option *ngFor="let s of shop" [value]="s.address">{{ s.address.split(",")[0] }}</option>
+        </select>
       </div>
       <div class="bills">
         <table>
@@ -136,6 +141,11 @@
             #supplierInput
             (change)="filter('import')"
           />
+          <label for="address" class="filter-label">hoặc</label>
+          <select #supplierSelect name="supplier" id="supplier" (change)="filterSelect('import')">
+            <option value=""> Tất cả</option>
+            <option *ngFor="let s of supplier" [value]="s.name">{{ s.name }}</option>
+          </select>
         </div>
       <div class="bills">
         <table>
