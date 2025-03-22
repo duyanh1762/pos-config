@@ -1,16 +1,16 @@
 <div class="admin-container">
   <nav class="sidebar">
-    <h2>Cấu hình</h2>
+    <h2 *ngIf="api.role === 'admin';else title">Cấu hình</h2>
     <ul>
-      <li><a routerLink="shops">Cửa hàng</a></li>
-      <li><a routerLink="items">Mặt hàng</a></li>
-      <li><a routerLink="groups">Nhóm mặt hàng</a></li>
-      <li><a routerLink="policys">Chính sách</a></li>
+      <ng-container ><li *ngIf="api.role === 'admin'"><a routerLink="shops">Cửa hàng</a></li></ng-container>
+      <ng-container ><li *ngIf="api.role === 'admin'"><a routerLink="items">Mặt hàng</a></li></ng-container>
+      <ng-container ><li *ngIf="api.role === 'admin'"><a routerLink="groups">Nhóm mặt hàng</a></li></ng-container>
+      <ng-container ><li *ngIf="api.role === 'admin'"><a routerLink="policys">Chính sách</a></li></ng-container>
 
-      <li><a routerLink="warehouse/order">Đơn hàng</a></li>
-      <li><a routerLink="warehouse/goods">Hàng hoá</a></li>
-      <li><a routerLink="warehouse/supplier">Nhà cung cấp</a></li>
-      <li><a routerLink="warehouse/report">Báo cáo kho</a></li>
+      <ng-container ><li *ngIf="api.role === 'warehouse'"><a routerLink="warehouse/order">Đơn hàng</a></li></ng-container>
+      <ng-container ><li *ngIf="api.role === 'warehouse'"><a routerLink="warehouse/goods">Hàng hoá</a></li></ng-container>
+      <ng-container ><li *ngIf="api.role === 'warehouse'"><a routerLink="warehouse/supplier">Nhà cung cấp</a></li></ng-container>
+      <ng-container ><li *ngIf="api.role === 'warehouse'"><a routerLink="warehouse/report">Báo cáo kho</a></li></ng-container>
       <li (click)="logout()"><div class="logout" >Đăng xuất</div></li>
     </ul>
   </nav>
@@ -18,3 +18,6 @@
     <router-outlet></router-outlet>
   </div>
 </div>
+<ng-template #title>
+  <h2>Kho tổng</h2>
+</ng-template>

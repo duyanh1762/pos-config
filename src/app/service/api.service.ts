@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { LoginReQuest } from '../Interface/login_request';
 import { DataRequest } from '../Interface/data_request';
 import { HttpClient } from '@angular/common/http';
 
@@ -7,11 +6,16 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root',
 })
 export class ApiService {
+  role:string | null = "";
   server: string = 'http://localhost:3000/';
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    if(this.role === ""){
+      this.role = localStorage.getItem("role");
+    }
+  }
 
-  public login(request: LoginReQuest) {
-    return this.http.post(this.server + 'login-authen', request);
+  public login(request: any) {
+    return this.http.post(this.server + 'login-authen/config', request);
   }
   public staff(request: DataRequest) {
     return this.http.post(this.server + 'staff', request);

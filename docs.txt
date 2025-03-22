@@ -1,1 +1,1 @@
-Storages_use : ["login-status","goods-infor"]
+Storages_use : ["login-status","goods-infor","role"]

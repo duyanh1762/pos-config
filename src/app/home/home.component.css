@@ -59,7 +59,9 @@
   overflow-y: auto;
   margin-left: 200px;
 }
-
+h2{
+  font-weight: 700;
+}
 
 /* Mobile Devices */
 @media (max-width: 768px) {
