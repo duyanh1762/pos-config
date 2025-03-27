@@ -47,6 +47,15 @@ export class ApiService {
   public ieDetail(request:DataRequest){
     return this.http.post(this.server + 'ie-detail', request);
   }
+  public bill(request:DataRequest){
+    return this.http.post(this.server + 'bill', request);
+  }
+  public billDetail(request:DataRequest){
+    return this.http.post(this.server + 'bill-detail', request);
+  }
+  public spend(request:DataRequest){
+    return this.http.post(this.server + 'spend', request);
+  }
 
   dateTransform(dateTime:string){
     const date = new Date(dateTime);

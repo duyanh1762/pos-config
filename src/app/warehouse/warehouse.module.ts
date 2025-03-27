@@ -47,6 +47,7 @@ let routes:Routes = [
     MatDatepickerModule,
     MatNativeDateModule,
     MatInputModule
-  ]
+  ],
+  exports:[MoneyTransformPipe]
 })
 export class WarehouseModule { }

@@ -5,6 +5,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatInputModule } from '@angular/material/input';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -22,6 +26,7 @@ import { StaffEditorComponent } from './shops/shop-details/staff-editor/staff-ed
 import { ItemEditorComponent } from './items/item-editor/item-editor.component';
 import { AddItemComponent } from './policys/policy-editor/add-item/add-item.component';
 import { WarehouseModule } from './warehouse/warehouse.module';
+import { AdminReportComponent } from './admin-report/admin-report.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +44,7 @@ import { WarehouseModule } from './warehouse/warehouse.module';
     StaffEditorComponent,
     ItemEditorComponent,
     AddItemComponent,
+    AdminReportComponent,
   ],
   imports: [
     BrowserModule,
@@ -47,9 +53,12 @@ import { WarehouseModule } from './warehouse/warehouse.module';
     HttpClientModule,
     WarehouseModule,
     ModalModule.forRoot(),
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatInputModule,
   ],
   providers: [ApiService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

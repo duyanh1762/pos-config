@@ -12,6 +12,7 @@ import { ShopDetailsComponent } from './shops/shop-details/shop-details.componen
 import { ShopListComponent } from './shops/shop-list/shop-list.component';
 import { IsAdminGuard } from './guard/isAdmin/is-admin.guard';
 import { IsWareHouseGuard } from './guard/isWarehouse/is-ware-house.guard';
+import { AdminReportComponent } from './admin-report/admin-report.component';
 
 const routes: Routes = [
   {path:"login", component:LoginComponent,canActivate:[AuthGuard]},
@@ -23,6 +24,7 @@ const routes: Routes = [
     {path:"items",component:ItemsComponent,canActivate:[LoginGuard,IsAdminGuard]},
     {path:"groups",component:GroupsComponent,canActivate:[LoginGuard,IsAdminGuard]},
     {path:"policys",component:PolicysComponent,canActivate:[LoginGuard,IsAdminGuard]},
+    {path:"statistic",component:AdminReportComponent,canActivate:[LoginGuard,IsAdminGuard]},
     {path:"warehouse",loadChildren:() =>
       import('./warehouse/warehouse.module').then((m) => m.WarehouseModule),canLoad:[IsWareHouseGuard]},
     {path:"",redirectTo:"shops",pathMatch:"full"}

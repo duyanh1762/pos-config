@@ -1,0 +1,119 @@
+<div class="content">
+  <div class="report-header">
+    <!-- <a routerLink="/manage/report" class="back-link"
+      ><i class="fas fa-home"></i> Trở về</a
+    > -->
+  </div>
+  <div class="time-content">
+    <div class="report-title">
+      <h3>CHỌN THỜI GIAN:</h3>
+    </div>
+    <div class="date-picker-form">
+      <mat-form-field appearance="fill">
+        <mat-label>Ngày bắt đầu</mat-label>
+        <input matInput [matDatepicker]="startPicker" [(ngModel)]="startDate" (dateChange)="onStartDateChange($event.value)"/>
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="startPicker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #startPicker></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div class="date-picker-form">
+      <mat-form-field appearance="fill">
+        <mat-label>Ngày kết thúc</mat-label>
+        <input matInput [matDatepicker]="endPicker" [(ngModel)]="endDate" (dateChange)="onEndDateChange($event.value)" />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="endPicker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #endPicker></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div class="date-picker-button">
+      <button (click)="confirmDate()" class="date-picker-button">
+        Xác nhận
+      </button>
+    </div>
+  </div>
+  <div class="report-content" [ngClass]="{hide: hide === true}">
+    <div class="card">
+      <h3>Thống kê cửa hàng</h3>
+      <div class="filter">
+        <label for="address" class="filter-label">Lọc:</label>
+        <input
+          type="text"
+          placeholder="Nhập địa chỉ cửa hàng..."
+          #shopInput
+          (change)="filter()"
+        />
+        <label for="address" class="filter-label">hoặc</label>
+        <select #shopSelect name="shop" id="shop" (change)="filterSelect()">
+          <option value=""> Tất cả</option>
+          <option *ngFor="let s of shopsLU" [value]="s.address">{{ s.address.split(",")[0] }}</option>
+        </select>
+      </div>
+      <div class="bills">
+        <table>
+          <thead>
+            <tr>
+              <th class="col1">Địa chỉ</th>
+              <th class="col2" (click)="sort('shop','sales')">
+                Doanh thu ↓
+              </th>
+              <th class="col3" (click)="sort('shop','goods')">
+                Nhập hàng ↓
+              </th>
+              <th class="col4" (click)="sort('shop','spend')">
+                Chi ngoài ↓
+              </th>
+              <th class="col5" (click)="sort('shop','profit')">Còn lại ↓</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let s of shops">
+              <td class="col1">{{s.address.split(",")[0] }}</td>
+              <td class="col2" style="color: green; font-weight: 600;">+{{ s.salesTotal | moneyTransform}}đ</td>
+              <td class="col3" style="color: red;font-weight: 600;">-{{ s.goodsTotal | moneyTransform}}đ</td>
+              <td class="col4" style="color: red;font-weight: 600;">-{{ s.spendTotal | moneyTransform}}đ</td>
+              <td class="col5">{{ s.salesTotal - s.goodsTotal - s.spendTotal | moneyTransform }}đ</td>
+            </tr>
+          </tbody>
+        </table>
+        <!-- <div class="export">
+          <button *ngIf="export === true" (click)="exportReport('bills')">Xuất báo cáo</button>
+        </div> -->
+      </div>
+    </div>
+    <div class="card">
+      <h3>Số lượng món bán</h3>
+      <div class="bills">
+        <table>
+          <thead>
+            <tr>
+              <th class="cl1">Tên món</th>
+              <th class="cl2" (click)="sort('item','num')">
+                Số lượng ↓
+              </th>
+              <th class="cl3" (click)="sort('item','total')">
+                Doanh số ↓
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container *ngFor="let i of items">
+              <tr *ngIf="i.num > 0">
+                <td class="cl1">{{ i.name }}</td>
+                <td class="cl2" style="font-weight: 600;" >{{ i.num }}</td>
+                <td class="cl3" style="font-weight: 600;" >{{ i.num * i.price | moneyTransform}}đ</td>
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
+        <!-- <div class="export">
+          <button *ngIf="export === true" (click)="exportReport('items')">Xuất báo cáo</button>
+        </div> -->
+      </div>
+    </div>
+  </div>
+</div>
