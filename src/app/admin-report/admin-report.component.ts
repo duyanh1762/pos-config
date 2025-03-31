@@ -11,28 +11,6 @@ import { Item } from '../Models/item';
 import { Bill } from '../Models/bill';
 import { BillDetail } from '../Models/bill_detail';
 import { Spend } from '../Models/spend';
-interface IeBillInfor {
-  id: number;
-  createAt: string;
-  confirmAt: string;
-  staffID: number;
-  shopID: number;
-  status: string;
-  type: string; // import || export
-  address: string;
-  staff: string;
-  total: number;
-}
-interface GoodsDetail{
-  id:number;
-  name:string
-  unit:string;
-  groupID:number;
-  price:number;
-  remaining:number;
-  import:number;
-  export:number;
-}
 
 interface ShopInfor{
   id: number;
@@ -66,7 +44,6 @@ export class AdminReportComponent implements OnInit {
 
     startDate: any;
     endDate: any;
-    goodsDetail: Array<GoodsDetail> = [];
 
     shops: Array<ShopInfor> = [];
     shopsLU:Array<ShopInfor> = [];
@@ -75,6 +52,10 @@ export class AdminReportComponent implements OnInit {
 
     hide:boolean = true;
     sortType:string = "upper";
+
+    totalSales:number = 0;
+    totalGoods:number = 0;
+    totalSpend:number = 0;
 
   constructor(public api:ApiService) { }
 
@@ -118,6 +99,9 @@ export class AdminReportComponent implements OnInit {
     }
 
     async confirmDate() {
+      this.totalSales = 0;
+      this.totalGoods = 0;
+      this.totalSpend = 0;
       this.shops.forEach((s:ShopInfor)=>{
         s.salesTotal = 0;
         s.goodsTotal = 0;
@@ -155,6 +139,7 @@ export class AdminReportComponent implements OnInit {
                 s.salesTotal = s.salesTotal + billTotal;
               }
             }
+            this.totalSales = this.totalSales + s.salesTotal;
           });
           await this.api.ieBill(request).toPromise().then(async (res:any)=>{
             let ieb:IeBill;
@@ -173,6 +158,7 @@ export class AdminReportComponent implements OnInit {
                 s.goodsTotal = s.goodsTotal + ieTotal;
               }
             }
+            this.totalGoods = this.totalGoods + s.goodsTotal;
           });
           await this.api.spend(request).toPromise().then((res:any)=>{
             res.forEach((spend:Spend)=>{
@@ -180,6 +166,7 @@ export class AdminReportComponent implements OnInit {
                 s.spendTotal = s.spendTotal + spend.total
               }
             });
+            this.totalSpend = this.totalSpend + s.spendTotal;
           });
         }
         this.shops = this.shopsLU;

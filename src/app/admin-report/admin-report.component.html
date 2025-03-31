@@ -78,6 +78,13 @@
               <td class="col4" style="color: red;font-weight: 600;">-{{ s.spendTotal | moneyTransform}}đ</td>
               <td class="col5">{{ s.salesTotal - s.goodsTotal - s.spendTotal | moneyTransform }}đ</td>
             </tr>
+            <tr style="font-style: italic;">
+              <td class="col1" style="font-weight: 700;">Tổng kết</td>
+              <td class="col2" style="color: green; font-weight: 600;">+{{ this.totalSales | moneyTransform }}đ</td>
+              <td class="col3" style="color: red;font-weight: 600;">- {{ this.totalGoods | moneyTransform }}đ</td>
+              <td class="col4" style="color: red;font-weight: 600;">-{{ this.totalSpend | moneyTransform }}đ</td>
+              <td class="col5">{{ this.totalSales - this.totalGoods - this.totalSpend | moneyTransform }}đ</td>
+            </tr>
           </tbody>
         </table>
         <!-- <div class="export">
