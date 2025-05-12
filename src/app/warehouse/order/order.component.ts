@@ -189,9 +189,13 @@ export class OrderComponent implements OnInit {
     }
   }
   async resetBills(){
+    this.goods = [];
     this.exportBills = [];
     this.GoodsInfor = [];
     let goodsFilter:Array<GoodsDetail>= [];
+    await this.api.goods({mode:"get",data:""}).toPromise().then((res:any)=>{
+      this.goods = res;
+    });
     this.goods.forEach((g:Goods)=>{
       goodsFilter.push({...g,export:0});
     });
