@@ -11,22 +11,22 @@ import { MatInputModule } from '@angular/material/input';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './login/login.component';
-import { HomeComponent } from './home/home.component';
-import { ShopsComponent } from './shops/shops.component';
-import { ItemsComponent } from './items/items.component';
-import { GroupsComponent } from './groups/groups.component';
-import { PolicysComponent } from './policys/policys.component';
-import { ApiService } from './service/api.service';
-import { PolicyEditorComponent } from './policys/policy-editor/policy-editor.component';
-import { GroupEdittorComponent } from './groups/group-edittor/group-edittor.component';
-import { ShopDetailsComponent } from './shops/shop-details/shop-details.component';
-import { ShopListComponent } from './shops/shop-list/shop-list.component';
-import { StaffEditorComponent } from './shops/shop-details/staff-editor/staff-editor.component';
-import { ItemEditorComponent } from './items/item-editor/item-editor.component';
-import { AddItemComponent } from './policys/policy-editor/add-item/add-item.component';
-import { WarehouseModule } from './warehouse/warehouse.module';
-import { AdminReportComponent } from './admin-report/admin-report.component';
+import { LoginComponent } from './features/login/login.component';
+import { HomeComponent } from './features/home/home.component';
+import { ShopsComponent } from './features/shops/shops.component';
+import { ItemsComponent } from './features/items/items.component';
+import { GroupsComponent } from './features/groups/groups.component';
+import { PolicysComponent } from './features/policys/policys.component';
+import { PolicyEditorComponent } from './features/policys/policy-editor/policy-editor.component';
+import { GroupEdittorComponent } from './features/groups/group-edittor/group-edittor.component';
+import { ShopDetailsComponent } from './features/shops/shop-details/shop-details.component';
+import { ShopListComponent } from './features/shops/shop-list/shop-list.component';
+import { StaffEditorComponent } from './features/shops/shop-details/staff-editor/staff-editor.component';
+import { ItemEditorComponent } from './features/items/item-editor/item-editor.component';
+import { AddItemComponent } from './features/policys/policy-editor/add-item/add-item.component';
+import { AdminReportComponent } from './features/admin-report/admin-report.component';
+import { WarehouseModule } from './features/warehouse/warehouse.module';
+import { ApiService } from './core/service/api.service';
 
 @NgModule({
   declarations: [

@@ -1,18 +1,19 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './login/login.component';
-import { LoginGuard } from './guard/login-guard/login.guard';
-import { HomeComponent } from './home/home.component';
-import { AuthGuard } from './guard/auth-guard/auth.guard';
-import { ShopsComponent } from './shops/shops.component';
-import { ItemsComponent } from './items/items.component';
-import { GroupsComponent } from './groups/groups.component';
-import { PolicysComponent } from './policys/policys.component';
-import { ShopDetailsComponent } from './shops/shop-details/shop-details.component';
-import { ShopListComponent } from './shops/shop-list/shop-list.component';
-import { IsAdminGuard } from './guard/isAdmin/is-admin.guard';
-import { IsWareHouseGuard } from './guard/isWarehouse/is-ware-house.guard';
-import { AdminReportComponent } from './admin-report/admin-report.component';
+import { LoginComponent } from './features/login/login.component';
+import { AuthGuard } from './core/guard/auth-guard/auth.guard';
+import { HomeComponent } from './features/home/home.component';
+import { LoginGuard } from './core/guard/login-guard/login.guard';
+import { ShopsComponent } from './features/shops/shops.component';
+import { IsAdminGuard } from './core/guard/isAdmin/is-admin.guard';
+import { ShopListComponent } from './features/shops/shop-list/shop-list.component';
+import { ShopDetailsComponent } from './features/shops/shop-details/shop-details.component';
+import { ItemsComponent } from './features/items/items.component';
+import { GroupsComponent } from './features/groups/groups.component';
+import { PolicysComponent } from './features/policys/policys.component';
+import { AdminReportComponent } from './features/admin-report/admin-report.component';
+import { IsWareHouseGuard } from './core/guard/isWarehouse/is-ware-house.guard';
+
 
 const routes: Routes = [
   {path:"login", component:LoginComponent,canActivate:[AuthGuard]},
@@ -26,7 +27,7 @@ const routes: Routes = [
     {path:"policys",component:PolicysComponent,canActivate:[LoginGuard,IsAdminGuard]},
     {path:"statistic",component:AdminReportComponent,canActivate:[LoginGuard,IsAdminGuard]},
     {path:"warehouse",loadChildren:() =>
-      import('./warehouse/warehouse.module').then((m) => m.WarehouseModule),canLoad:[IsWareHouseGuard]},
+      import('./features/warehouse/warehouse.module').then((m) => m.WarehouseModule),canLoad:[IsWareHouseGuard]},
     {path:"",redirectTo:"shops",pathMatch:"full"}
   ]},
   {path:"**",redirectTo:"home",pathMatch:"full"},
